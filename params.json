@@ -1,0 +1,6 @@
+{
+  "name": "Interpreter stolných hier",
+  "tagline": "",
+  "body": "### Motivácia\r\nProgramátor dostane popis stolnej hry, a má naprogramovať jej\r\npočítačovú verziu. A potom dostane popis ďalších niekoľko stolných\r\nhier, a tie by tiež mal naprogramovať. Verí ale, že veľa práce sa dá\r\nušetriť, lebo stolné hry majú toho medzi sebou veľa spoločného. \r\n\r\n### Špecifikácia\r\nCieľom je navrhnúť program, ktorý hru implementuje za nás.\r\nČo to obnáša:\r\n\r\n1. Návrh jazyka, v ktorom sa dajú jednoducho popisovať pravidlá\r\nstolných hier.\r\n\r\n2. Vytvorenie programu, ktorý bude pracovať s popisom stolnej hry.\r\nPodľa neho by mal implementovať herné pravidlá, poskytnúť intuitívne\r\npoužívateľské rozhranie, a jednoduchého počítačového protivníka.\r\n\r\n3. Možnosť rozšíriť individuálne hry -- hlavne zobrazovanie obrázkov\r\njednotlivých herných objektov a vlastný, pokročilejší počítačový\r\nprotivník.\r\n\r\n### Kontakty\r\n**Študent:** Truc Lam Bui (bujtuclam [zavinac] gmail [bodka] com)  \r\n**Vedúci:** RNDr. Michal Forišek PhD. (misof [zavinac] ksp [bodka] sk)\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
