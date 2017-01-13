@@ -1,0 +1,260 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\def\header#1#2{% definujeme hlavicku ulohy, parametre su nazov a meno cloveka
+\centerline{\Large\sc Ro\v{c}n\'{\i}kov\'{y} projekt -- #1}
+\medskip
+\centerline{\large #2}
+\vspace{-\baselineskip}\rightline{\today}
+\bigskip\hrule\bigskip
+
+}
+
+\begin{document}
+
+\header{zimn\'{y} semester}{Truc Lam, Bui}
+
+Stoln\'{y}ch hier je nespo\v{c}etne ve\v{l}a, no z na\v{s}ej
+sk\'{u}senosti vieme, \v{z}e zdie\v{l}aj\'{u} ve\v{l}a spolo\v{c}n\'{y}ch
+vlastnost\'{\i}. Konkr\'{e}tne sme si v\v{s}imli nasledovn\'{e}.
+
+\begin{enumerate}
+    \item Jednoduchos\v{t} pravidiel. Oproti videohr\'{a}m s\'{u}
+    ve\v{l}mi jednoduch\'{e} -- jeden z d\^{o}vodov je ten, \v{z}e pravidl\'{a} hry mus\'{\i}
+    ovl\'{a}da\v{t} aspo\v{j} jeden z hr\'{a}\v{c}ov. A o pohyb fig\'{u}rok
+    a hern\'{y}ch objektov sa takisto star\'{a} niektor\'{y} z hr\'{a}\v{c}ov.
+    Vo videohr\'{a}ch sa o dodr\v{z}iavanie pravidiel star\'{a} stroj
+    -- po\v{c}\'{\i}ta\v{c}, hern\'{a} konzola, ... a tie t\'{u}to
+    ``manu\'{a}lnu'' robotu vedia robi\v{t} lep\v{s}ie a r\'{y}chlej\v{s}ie.
+    \item \v{C}astokr\'{a}t je stav hry jednozna\v{c}ne ur\v{c}en\'{y}
+    t\'{y}m, v akej ``konfigur\'{a}cii'' sa nach\'{a}dzaj\'{u} hern\'{e}
+    objekty (tj. ako s\'{u} na sebe ``naskladan\'{e}''), a hr\'{a}\v{c}om
+    na \v{t}ahu.
+    \begin{enumerate}
+        \item Pr\'{\i}kladom je napr\'{\i}klad \v{s}ach. M\^{o}\v{z}eme
+        sa na to pozera\v{t} takto: hern\'{e} objekty s\'{u} jednotliv\'{e}
+        \v{s}achov\'{e} fig\'{u}rky, a pol\'{\i}\v{c}ka \v{s}achovnice.
+        Stav hry je ur\v{c}en\'{y} t\'{y}m, ktor\'{e} fig\'{u}rky s\'{u}
+        polo\v{z}en\'{e} na ktor\'{y}ch pol\'{\i}\v{c}kach (+ hr\'{a}\v{c}om
+        na \v{t}ahu). Teda ak m\'{a}me dve partie, a v oboch s\'{u} objekty
+        na sebe naskladan\'{e} rovnako, tak ak je v oboch na \v{t}ahu
+        ten ist\'{y} hr\'{a}\v{c}, tak s\'{u} to \'{u}plne identick\'{e}
+        partie.
+        \item Pri komplikovanej\v{s}\'{\i}ch hr\'{a}ch n\'{a}m to u\v{z}
+        ale nemus\'{\i} sta\v{c}i\v{t} -- napr\'{\i}klad sa m\^{o}\v{z}e
+        sta\v{t}, \v{z}e mno\v{z}ina mo\v{z}n\'{y}ch \v{t}ahov
+        hr\'{a}\v{c}a z\'{a}vis\'{\i} od doteraj\v{s}ieho priebehu hry.
+        \item ``Naskladanie'' objektov zvykne ma\v{t} stromovit\'{u}
+        \v{s}trukt\'{u}ru.
+    \end{enumerate}
+    \item \v{T}ah hr\'{a}\v{c}a spo\v{c}\'{\i}va vo
+    v\'{y}bere nejakej mno\v{z}iny hern\'{y}ch objektov. Pr\'{\i}padne
+    vyber\'{a} \v{c}\'{\i}slo, in\'{e}ho hr\'{a}\v{c}a, ...
+    \begin{enumerate}
+        \item V \v{s}achu: vyberie fig\'{u}rku, ktorou chce pohn\'{u}\v{t},
+        a vyberie pol\'{\i}\v{c}ko, na ktor\'{e} chce fig\'{u}rku
+        presun\'{u}\v{t}.
+        \item V \emph{Magic the Gathering}: vyberie kartu, ktor\'{u}
+        chce zahra\v{t}, a dodato\v{c}n\'{e} ciele, m\'{o}dy, a in\'{e}
+        parametre.
+    \end{enumerate}
+\end{enumerate}
+
+Na z\'{a}klade horeuveden\'{e}ho od n\'{a}\v{s}ho jazyka o\v{c}ak\'{a}vame
+minim\'{a}lne toto.
+
+\begin{enumerate}
+    \item Pr\'{a}ca s hern\'{y}mi objektami.
+    \begin{enumerate}
+        \item Mo\v{z}nos\v{t} \textbf{vytv\'{a}ra\v{t} a ru\v{s}i\v{t} hern\'{e}
+        objekty} s r\^{o}znymi parametrami. Napr\'{\i}klad na za\v{c}iatku
+        partie \v{s}achu chceme vytvori\v{t} hern\'{u} dosku, pol\'{\i}\v{c}ka
+        na nej (s parametrami riadok a st\'{l}pec) a jednotliv\'{e} fig\'{u}rky.
+        \item Mo\v{z}nos\v{t} \textbf{na seba objekty ``uklada\v{t}''} -- napr\'{\i}klad
+        polo\v{z}i\v{t} pe\v{s}iaka na \verb|h6|. A tie\v{z} mo\v{z}nos\v{t}
+        objekty \textbf{``odklada\v{t}''} -- napr\'{\i}klad ke\v{d} pohneme pe\v{s}iakom
+        z \verb|h5| na \verb|h6|, tak u\v{z} nie je polo\v{z}en\'{y} na
+        pol\'{\i}\v{c}ku \verb|h5|.
+        \item Mo\v{z}nos\v{t} \textbf{zisti\v{t}, ako s\'{u} na sebe objekty
+        ulo\v{z}en\'{e}} -- teda napr\'{\i}klad pre dve objekty $A, B$
+        vedie\v{t} zisti\v{t}, \v{c}i $A$ je ``na'' $B$.
+        
+        Ak by sme t\'{u}to mo\v{z}nos\v{t} nemali, tak n\'{a}m je \'{u}plne
+        jedno, ako s\'{u} na sebe objekty ulo\v{z}en\'{e}, lebo by sme sa
+        pod\v{l}a toho aj tak nevedeli rozhodova\v{t} (tj. \v{c}i je
+        \v{t}ah platn\'{y} alebo nie, ...).
+    \end{enumerate}
+    \item V\v{s}eobecn\'{e} vymo\v{z}enosti programovacieho jazyka.
+    \begin{enumerate}
+        \item V\v{s}imli sme si, \v{z}e v\"{a}\v{c}\v{s}inou hry nemaj\'{u}
+        pam\"{a}\v{t} -- teda m\'{a}lokedy od n\'{a}s po\v{z}aduj\'{u},
+        aby sme si zapam\"{a}tali hodnotu $X, Y, \ldots$ (ktor\'{e}
+        nejako vypo\v{c}\'{\i}tame) na neskor\v{s}ie vyu\v{z}itie.
+        (Na to sl\'{u}\v{z}i predsa konfigur\'{a}cia hern\'{y}ch objektov.)
+        
+        Pre jednoduchos\v{t} preto m\^{o}\v{z}e by\v{t} \textbf{funkcion\'{a}lny}
+        -- \v{z}iadne premenn\'{e} a pam\"{a}\v{t} (okrem argumentov volanej
+        funkcie), jedin\'{y} ``stav'' je stav hry.
+    \end{enumerate}
+    \item Komunik\'{a}cia s hr\'{a}\v{c}mi -- vedie\v{t} si \textbf{vyp\'{y}ta\v{t}
+    ``odpove\v{d}'' (\v{t}ah)} hr\'{a}\v{c}a.
+    \begin{enumerate}
+        \item V ka\v{z}dom momente je pr\'{a}ve jeden hr\'{a}\v{c} ``pri slove''
+        (na \v{t}ahu). Hovor\'{\i}me, \v{z}e tento hr\'{a}\v{c} m\'{a}
+        prioritu. Od jazyka o\v{c}ak\'{a}vame, \v{z}e n\'{a}m umo\v{z}\v{n}uje
+        pos\'{u}va\v{t} prioritu \v{d}al\v{s}\'{\i}m hr\'{a}\v{c}om.
+        (Inak hru hr\'{a} len jeden hr\'{a}\v{c} ...)
+        \item Na hru sa m\^{o}\v{z}eme pozera\v{t} ako na v\'{y}po\v{c}et, v ktorom
+        v r\^{o}znych okamihoch rozhoduj\'{u} r\^{o}zne entity (hr\'{a}\v{c}i)
+        o priebehu v\'{y}po\v{c}tu. Od hr\'{a}\v{c}a (ktor\'{y} m\'{a}
+        aktu\'{a}lne prioritu) si teda budeme p\'{y}ta\v{t} hodnoty,
+        ktor\'{e} chce ``dosadi\v{t}'' do premenn\'{y}ch.
+    \end{enumerate}
+\end{enumerate}
+
+Vykon\'{a}vanie hry si predstavujeme takto.
+
+\begin{enumerate}
+    \item Na za\v{c}iatku sa zavol\'{a} proced\'{u}ra s n\'{a}zvom \verb|init|
+    (definovan\'{a} v popise hry).
+    T\'{a} n\'{a}m vytvor\'{\i} v\v{s}etky potrebn\'{e} hern\'{e}
+    objekty a po\v{c}iato\v{c}n\'{y} stav hry.
+    \item Potom sa a\v{z} do konca hry bude vola\v{t} proced\'{u}ra
+    \verb|round|, ktor\'{a} odsimuluje jedno kolo hry (resp. nejak\'{u}
+    ucelen\'{u} \v{c}as\v{t} hry). Simulujeme v\'{y}po\v{c}et,
+    a ke\v{d} to potrebujeme, tak si vyp\'{y}tame hodnoty od
+    hr\'{a}\v{c}ov. Hr\'{a}\v{c}om s\'{u} samozrejme oznamovan\'{e}
+    zmeny stavu hry.
+    \item Hra kon\v{c}\'{\i} zavolan\'{\i}m
+    \v{s}peci\'{a}lnej proced\'{u}ry \verb|game_over|. Hr\'{a}\v{c}om
+    ozn\'{a}mime, ako sa im v hre darilo.
+\end{enumerate}
+
+Po\v{d}me sa pozrie\v{t} na to, ako konkr\'{e}tnej\v{s}ie
+si predstavujeme popisovac\'{\i} jazyk.
+
+\begin{enumerate}
+    \item Funkcie -- \verb|<navratovy_typ> <nazov_funkcie> <zoznam_argumentov> <telo_funkcie>|
+    N\'{a}vratov\'{y} typ m\^{o}\v{z}e by\v{t}
+    \begin{enumerate}
+        \item \verb|void| (ide o proced\'{u}ru -- nevraciame \v{z}iadnu hodnotu)
+        \item \verb|bool| (predik\'{a}t)
+        \item \verb|int|
+        \item \verb|<nazov_triedy>| -- funkcia vr\'{a}ti odkaz na objekt z tej triedy
+        \item \verb|set <zoznam_typov>| -- funkcia vr\'{a}ti mno\v{z}inu alebo rel\'{a}ciu
+    \end{enumerate}
+    \item Pr\'{a}ca so stavom hry.
+    \begin{enumerate}
+        \item \verb|class| -- definuje triedu objektov (napr\'{\i}klad \verb|policko|).
+        V tele triedy definujeme parametre objektov (napr\'{\i}klad \verb|int riadok|,
+        \verb|int stlpec|) a kon\v{s}truktor, ktor\'{y} im d\'{a} konkr\'{e}tne hodnoty.
+        \item \verb|new| -- vytvor\'{\i} objekt danej triedy, a jeho parametre
+        nastav\'{\i} pod\v{l}a toho, ak\'{e} hodnoty d\'{a}me kon\v{s}truktoru.
+        Napr\'{\i}klad \verb|new policko (1, 3)|.
+        \item \verb|attach (A, B)| -- polo\v{z}\'{\i} objekt \verb|A| na objekt
+        \verb|B|. Ak to nie je mo\v{z}n\'{e} (napr\'{\i}klad by sa poru\v{s}ila
+        stromovit\'{a} \v{s}trukt\'{u}ra), tak vyhod\'{\i}me chybu a kon\v{c}\'{\i}me.
+        V korektne naprogramovanej hre by sa to nemalo sta\v{t}.
+        \item \verb|detach A| -- objekt \verb|A| sa stane vo\v{l}n\'{y}, a u\v{z}
+        nie je na ni\v{c}om polo\v{z}en\'{y}.
+        \item \verb|pass_to P| -- posunieme prioritu hr\'{a}\v{c}ovi \verb|P|.
+    \end{enumerate}
+    \item Vstavan\'{e} predik\'{a}ty, logick\'{e} spojky, ...
+    \begin{enumerate}
+        \item \verb|A > B|, \verb|A < B|, \verb|A >= B|, \verb|A <= B| na porovn\'{a}vanie
+        premenn\'{y}ch typu \verb|int|.
+        \item \verb|A and B|, \verb|A or B|, \verb|not A|
+        \item \verb|A = B| -- odkazuj\'{u} \verb|A| aj \verb|B| na ten ist\'{y} objekt?
+    \end{enumerate}
+    \item Vstavan\'{e} funkcie.
+    \begin{enumerate}
+        \item Pr\'{a}ca s cel\'{y}mi \v{c}\'{\i}slami. \verb|A + B|,
+        \verb|A - B|, \verb|A * B|, \verb|A / B|, \verb|min (A, B)|,
+        \verb|max (A, B)|
+        \item \verb|parent A| -- vr\'{a}ti odkaz na objekt, na ktorom je polo\v{z}en\'{e}
+        \verb|A|. Ak je \verb|A| vo\v{l}n\'{e}, vr\'{a}ti \verb|null|.
+        \item Pr\'{a}ca s mno\v{z}inami.
+        \begin{enumerate}
+            \item \verb|collect <zoznam_argumentov_dlzky_k> from <mnozina> with <k-arny_predikat>| -- vr\'{a}ti podmno\v{z}inu
+            $k$-tic (rel\'{a}ciu), v ktorej s\'{u} pr\'{a}ve tie $k$-tice objektov,
+            ktor\'{e} sp\'{l}\v{n}aj\'{u} predik\'{a}t.
+            \item \verb|size_of A| -- vr\'{a}ti po\v{c}et prvkov mno\v{z}iny
+            \item \verb|A times B| -- vr\'{a}ti kartezi\'{a}nsky s\'{u}\v{c}in
+            \item \verb|A union B|, \verb|A except B|, \verb|A intersect B|
+            \item \verb|range (A, B)| -- vr\'{a}ti mno\v{z}inu \v{c}\'{\i}sel $\lbrace A, A+1, \ldots, B\rbrace$
+        \end{enumerate}
+    \end{enumerate}
+    \item Riadiace \v{s}trukt\'{u}ry.
+    \begin{enumerate}
+        \item \verb|repeat <int> <telo>| -- \verb|A|-kr\'{a}t za sebou vykonaj
+        telo.
+        \item \verb|if <bool> <telo>|, \verb|while <bool> <telo>|
+        \item \verb|for <zoznam_argumentov_dlzky_k> from <mnozina> with <k-arny_predikat> <telo>| --
+        vykon\'{a} telo pre ka\v{z}d\'{u} vyhovuj\'{u}cu $k$-ticu. V tele
+        sa m\^{o}\v{z}eme odkazova\v{t} na argumenty.
+    \end{enumerate}
+    \item Pr\'{\i}kazy, ktor\'{e} nie s\'{u} v\'{y}po\v{c}ty --
+    ``niekto zvonka'' n\'{a}m dod\'{a} hodnotu.
+    \begin{enumerate}
+        \item \verb|random from <mnozina>| -- vr\'{a}ti n\'{a}hodn\'{y}
+        prvok (resp. $k$-ticu ak to je $k$-\'{a}rna rel\'{a}cia) z mno\v{z}iny.
+        \item \verb|chosen <zoznam_argumentov_dlzky_k> from <mnozina> with <k-arny_predikat>| --
+        sp\'{y}tame sa hr\'{a}\v{c}a s prioritou na $k$-ticu objektov. Pritom ale t\'{a}to $k$-tica
+        mus\'{\i} ma\v{t} nejak\'{e} vlastnosti (aby z toho bol platn\'{y} \v{t}ah).
+        \item \verb|setup <zoznam_argumentov_dlzky_k> from <mnozina> with <k-arny_predikat>| --
+        sp\'{y}tame sa \textbf{game-mastera} na $k$-ticu objektov s nejakou vlastnos\v{t}ou.
+        U\v{z}ito\v{c}n\'{e} v pr\'{\i}pravnej f\'{a}ze hry -- \v{c}o ak
+        niektor\'{y} z hr\'{a}\v{c}ov chce hra\v{t} za biele fig\'{u}rky?
+        Dohodne sa s game-masterom.
+    \end{enumerate}
+\end{enumerate}
+
+\v{D}alej sa pozrieme na niektor\'{e} obmedzenia.
+
+\begin{enumerate}
+    \item V jazyku sa zatia\v{l} daj\'{u} popisova\v{t} iba hry s \'{u}plnou
+    inform\'{a}ciou, teda ka\v{z}d\'{y} hr\'{a}\v{c} vie kompletn\'{y} stav
+    hry. Napr\'{\i}klad poker.
+    \item Probl\'{e}mom s\'{u} tie\v{z} hry, kde stav hry z\'{a}vis\'{\i}
+    aj od doteraj\v{s}ieho priebehu. V na\v{s}om jazyku sa toti\v{z}
+    ned\'{a} ``pozera\v{t} do minulosti''. Napr\'{\i}klad v
+    \emph{Magic the Gathering} schopnos\v{t} \emph{echo}.
+    \item Nedaj\'{u} sa meni\v{t} parametre objektov po ich vytvoren\'{\i}.
+    Op\"{a}\v{t} ako pr\'{\i}klad uvedieme \emph{Magic the Gathering}:
+    creature karta v ruke m\'{a} \'{u}plne in\'{e} parametre, ako
+    creature karta na battlefielde.
+    \item Hry, kde sa ve\v{l}a odohr\'{a}va v hlav\'{a}ch hr\'{a}\v{c}ov.
+    (Teda je v nich nejak\'{a} inform\'{a}cia, ktor\'{a} nie je zachyten\'{a}
+    v tom, ako s\'{u} na sebe objekty naskladan\'{e}.)
+    \item ...
+\end{enumerate}
+
+\v{C}o sa t\'{y}ka vizualiz\'{a}cie hry klientsk\'{y}m programom:
+klient vie, ktor\'{y} objekt je polo\v{z}en\'{y} na ktorom objekte.
+Pod\v{l}a toho vie celkom dobre zobrazi\v{t} stav hry. Na vizualiz\'{a}ciu
+sl\'{u}\v{z}i druh\'{y} jazyk, ktor\'{e}ho ciele s\'{u} nasledovn\'{e}:
+\begin{enumerate}
+    \item Pre ka\v{z}d\'{y} objekt na z\'{a}klade jeho parametrov
+    na\v{c}\'{\i}ta obr\'{a}zok. Napr\'{\i}klad ke\v{d} m\'{a}me
+    \v{s}ach, a v \v{n}om \verb|policko| s \verb|riadok = 5| a \verb|stlpec = 3|,
+    tak na\v{c}\'{\i}tame obr\'{a}zok \v{c}ierneho pol\'{\i}\v{c}ka.
+    Pre nep\'{a}rne \verb|riadok + stlpec| by sme na\v{c}\'{\i}tali
+    obr\'{a}zok bieleho pol\'{\i}\v{c}ka.
+    \item Majme objekt $A$, ktor\'{y} je polo\v{z}en\'{y} na $B$.
+    Pod\v{l}a parametrov t\'{y}chto objektov ur\v{c}\'{\i}me,
+    kde m\'{a} by\v{t} vyobrazen\'{e} $A$ relat\'{\i}vne k obrazu $B$.
+\end{enumerate}
+
+Oh\v{l}adne komunik\'{a}cie klienta so serverom, server klientovi
+posiela zmeny v stave hry (\verb|attach (A, B)|, \verb|detach A|, \verb|new|,
+\verb|pass_to <player>|, ...) a v\v{z}dy, ke\v{d} server od klienta
+po\v{z}aduje ``dosadenie'' (\verb|chosen <...> from <...> with <...>|),
+tak sa ho sp\'{y}ta (pri\v{c}om mu bli\v{z}\v{s}ie \v{s}pecifikuje,
+ak\'{e} vlastnosti mus\'{\i} odpove\v{d} sp\'{l}\v{n}a\v{t}).
+
+Lep\v{s}iu predstavu o detailoch (technick\'{y}ch \v{c}i netechnick\'{y}ch)
+budeme ma\v{t} po implement\'{a}cii.
+
+\end{document}
