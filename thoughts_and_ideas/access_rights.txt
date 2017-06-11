@@ -1,0 +1,36 @@
+Vision is about having access to some information, but not having
+access to other information. So, the first thing that comes to mind
+is the following solution: each object can be either hidden, or visible
+(from each player's perspective). This has several problems, like how
+are interactions involving such hidden objects communicated to players
+that shouldn't know about the object's existence? It is also clunky,
+because things like "card had two sides, one of them contains no information"
+are difficult to implement.
+
+The second solution is that instead of having such hidden objects,
+each object will be visible, but not all its fields (variable values)
+will be available. This is less powerful and simpler, but it still
+suffers from "clunkyness".
+
+A natural generalization of the aforementioned is this: each object
+has its "properties" (methods that provide information about the object,
+they don't modify it in any way), and each property can be accessed by 
+only a selected few players. For example, to implement a card, one only 
+has to "overlay" the object with an empty interface, or in other words, 
+grant the access rights only to the player that owns the card.
+
+This is convenient enough, but has its problems too. How are the objects
+communicated to the client? If the object has only properties with
+no arguments, there's no problem, as we can simply
+transmit the values of all of them. The problem is with properties that
+take arguments -- we cannot provide values for all possible argument
+lists, because such an enumeration would be exhausting. Such a property
+however doesn't make much sense: in the real world, when you are looking
+at a card, you can see all its properties at the same time. You're not
+asking the card "Hello, what is the value of this?" to obtain the
+property's value. We will therefore exclude such properties.
+(Although there are certain uses of such properties, such as "show
+me the X-th card in my hand" -- there must be a different way to
+model such properties. One could argue that the object is composite,
+and only composite objects have such properties, and composite objects
+can be modelled by connections.)

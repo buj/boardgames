@@ -1,0 +1,32 @@
+States implement the phases of the game where players are making
+decisions and taking actions. Everything apart from states is a mere
+calculation, without any input from the players (possibly involving
+randomness).
+
+The idea is this: each states has a list of actions that players can
+take. Each action has access rights (limiting which players can and
+which cannot use the action), a list of arguments (provided by the
+player taking the action) and a description of the action itself
+(a block of code that is to be executed).
+
+How do we however blend states into the "normal" execution routines? 
+How do we change states? Can we change a state in the midst of function
+execution? And many other questions arise.
+
+Each state has a transition condition and transition routine, which
+is executed when the condition is met. These are responsible for
+changing the state (for example, when all players have decided their
+actions), and are checked whenever there is nothing to be done. That
+is, one cannot change states inside functions. (What would that be
+good for anyway?)
+
+Sometimes, we want to return to the previous state. For example, after
+we choose the target for "Lightning Bolt" and deal 3 damage to it, we
+want to return to the Main Phase. We however don't know from where was
+the "play Lightning Bolt" routine called. So, it is not enough just
+to be able to go-to state, we must be able to call a state (just like
+functions).
+
+One can think of states as "the points in the game when things are
+happening, and where it is not enough to just point to the next command
+to be executed".

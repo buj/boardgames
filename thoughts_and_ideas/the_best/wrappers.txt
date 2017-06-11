@@ -1,0 +1,37 @@
+Wrappers are something like functions whose purpose is to modify
+other functions' behaviour. Here are some uses of wrappers:
+
+- This creature gets +2/+2 if you control another creature.
+- Instant and sorcery spells you cast cost 1 colorless mana less to
+  cast.
+- If you would draw a card, draw two cards instead.
+...
+
+The wrapper must know the following: the target function (which is
+to be wrapped), the wrapper's body (which determines how the function
+is modified). We must be able to reference the original function in
+the body -- we call it with an alias like "super".
+
+Here are examples of wrapper definitions:
+
+power -> {
+  return 2*super() + 3 
+}
+deal_damage(x) -> {
+  return 2*super(2*x)
+}
+
+Of course, the syntax is not perfect nor is it set in stone, but the
+general idea is there.
+
+Wrappers are always bound to a "while" field of something that is
+in the game. The wrapper is active only if the thing is still in the
+game, and if it is, only if the while-condition is satisfied.
+The moment the wrapper is not active, it is removed from the set
+of wrappers of the target function.
+
+------------------------------------------------------------------------
+
+Problem: how do we determine the order in which the wrappers are applied
+to the function? (There is no problem if there is only 1 wrapper, or
+the wrappers are commutative. Not all cases are like this though.)

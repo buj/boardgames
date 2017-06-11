@@ -1,0 +1,99 @@
+Here is a list of all the parts that make up the state of the game.
+Together, they define it almost completely -- the only missing piece is
+the history of the game, and that needs to be implemented by each part
+separately. (History of the game can have impact. Consider the following
+ability: "Target player loses 5 life unless a creature attacked this
+turn.")
+
+
+1. The way objects (physical components) are connected/attached
+to each other.
+
+This part aims to answer the following questions:
+- Is the card on the battlefield?
+- Is it in your hand?
+- Is this equipment attached to this creature?
+- Is this card part of this deck?
+...
+
+And it should be able to accomplish the following tasks:
+- Attach this equipment to target creature.
+- Put the card into your library 3rd from the top.
+- Draw five cards.
+- Put the rest on the bottom of your library in any/random order.
+- Put three +1/+1 counters on target creature.
+...
+
+
+2. The description of each object.
+
+This part aims to answer the following questions:
+- Is it a card? Is it a creature card? Does it have flying? Is it
+  the infamous "Storm Crow"?
+- How much damage did it take this turn? Is it tapped?
+...
+
+It should be able to accomplish the following:
+- Deal 3 damage to target creature or player.
+- As long as this creature is on the battlefield, other creatures you
+  control get +2/+2 and have flying.
+- Ensure that +1/+1 counters actually improve the creature's combat
+  statistics.
+...
+
+
+3. Execution and phases of play.
+
+This part should be capable of:
+- Whenever a creature you control is dealt damage, do something.
+- Ensure that the turn is divided into phases in a specified order:
+  draw, untap, upkeep, main phase 1, ...
+- When this creature dies, do something.
+- Ensure that during specific phases, different players have different
+  actions. (In turn based games, this means the turn player has some
+  options and other players have none. Games that have parallel decision
+  making make great use of this -- for example, in "Dungeon Lords",
+  players choose their actions in parallel.)
+
+
+4. Visibility.
+
+This part should be capable of:
+- Hide a card from a certain player, or reveal a card to a certain player.
+
+Our solution must be able to solve these problems:
+- Cards aren't really hidden (= invisible), they're only disguised as
+  something else that doesn't have direct impact on the game. But
+  disguised as what? As a "blank" instance of the most specific type?
+  The least specific type? Or should we specify it at creation time?
+
+Care should be taken with this part, because it complicates the
+process of communicating player actions from client to server. The server
+must provide information about the game without revealing any information
+that should be kept away from the client, and at the same time, it must
+be ensured that the server and the client understood each other.
+
+Also, different viewpoints can have different values of predicates.
+Some uses of predicates or functions require that they have the same
+value, and that this fact must be provable from each viewpoint. This
+generally means that all inputs to such a predicate/function must be
+public.
+
+Generally, all game logic should be based on data that is public.
+
+
+5. General logic.
+
+This enables us to ask more kinds of questions without having to resort
+to "imperative logic". This part should be as extensive as possible, so
+that other parts need not be so extensive. (That is, general logic should
+be able to "enhance" other parts to form complex behaviour.)
+
+
+6. History.
+
+This is, of course, separately implemented by each of the other parts.
+There is no need to implement state-changing behaviour, of course,
+because what happened in the past cannot change. We only need to
+implement "the questions", and a good way to time travel that doesn't
+feel too imperative.

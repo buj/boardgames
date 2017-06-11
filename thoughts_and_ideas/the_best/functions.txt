@@ -1,0 +1,34 @@
+This document describes the makeup of functions, and structures similar
+to (or derived from) functions, such as properties, procedures, ...
+
+A function has a return type, a name, an argument list (type-name
+list), and a body. The function can be called by its name and providing
+a name-value list that fits the argument list. The body is executed,
+substituting names from the argument list with the provided values.
+When the magical statement return is invoked, the function stops its
+execution, is removed from the stack, and provides the returned value
+to whoever called the function.
+  A body of a function is a block of code, which is described in
+a separate document (due to its ubiquitous use). In simple terms, it is
+a list of commands.
+
+A function returning void type is a procedure -- it doesn't return
+anything. On the other hand, its body can contain commands that modify
+the game state, such as attaching objects, modifying variable values,
+...
+
+A function returning bool is a predicate. Predicates have special role
+in certain circumstances, like whenever there is a "condition", a
+predicate should be provided.
+  A function returning anything else is simply a function. Non-void
+functions mustn't modify the game state, that is, their body cannot
+contain such commands.
+
+A function has a set of wrappers that are applied to it. Whenever
+the function is called, the order in which the wrappers are wrapped
+around it is determined, and the resulting wrapped function is
+executed. This means that the body of the first wrapper is
+executed, and whenever we encounter a function call 'super',
+the second wrapper is executed. Inside the body of the second wrapper,
+whenever we encounter 'super', the third wrapper is executed. And so
+on.

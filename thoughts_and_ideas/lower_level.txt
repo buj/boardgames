@@ -1,0 +1,9 @@
+Before dealing with high-level constructs, we should create a low-level
+sublayer that will take care of all the issues of communication between
+client and server, hidden information, history, memoization, and
+dependencies between variables.
+
+Maybe we could drop dependencies between variables, because there are
+issues with recursion (and we probably want recursion). In such a case,
+we would also have to drop memoization (which depends on dependency
+system to know when a new value has to be computed).

@@ -1,0 +1,25 @@
+Triggers implement the functionality necessary to implement stuff
+like this:
+
+- Whenever an opponent draws a card, you draw 2 cards.
+- Whenever a creature you control dies, target opponent loses 1 life
+  and you gain 1 life.
+- When this creature dies, each player discards a card.
+...
+
+They are composed of a condition, and a body. At each step of execution,
+it is checked whether the originator of the trigger is still in the
+game. If yes, the condition is checked. If we pass all the checks,
+we execute the body of the trigger.
+
+One way to implement it is this: we remember a list of all triggers
+that are still active. At each step, we check all the triggers.
+The triggers that fail the "originator existence" test are removed
+from the list. The triggers that pass both tests are executed in some
+order.
+
+------------------------------------------------------------------------
+
+Problem: how do we determine the order of execution of multiple
+triggers? (There is no problem if there is only 1 trigger, or all
+triggers are mutually commutative. That's not all the cases, though.)

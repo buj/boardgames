@@ -1,0 +1,82 @@
+This document contains all the problems related to server-client
+communication, and the potential solutions.
+
+What data should be communicated between the server and the client?
+For server to be able to simulate the game, the client must provide
+it with the "substituted values". Other than that, the server doesn't
+require anything from the client.
+
+The other direction is more complicated. The server must provide
+the client with up-to-date game data, so that the client can make
+a reasonable decision.
+
+Also, the client must know at appropriate times (like when it is making
+decisions) where in the code the game is. That is, it must know the
+phase of the game and all the relevant circumstances -- otherwise,
+it wouldn't be able to make an informed decision. Also, it should know
+a large portion of the game's history (without having to guess).
+We will therefore make the assumption (and simplification) that the
+majority of the game's flow is public (except for black box functions).
+
+So, for sending data to client, the server has the following options:
+
+1. Send the entire game state. Too expensive, and it reveals all
+the hidden information to the client, so this is not a good solution.
+
+2. Send all the data that is necessary for the client to simulate
+the game, up to the point where the server's simulation is. That means
+that we just send all the randomly generated values, and values
+provided by other players.
+  An important assumption of this is that all data needed for
+advancing the game is public. That means that information not available
+to everyone cannot have direct impact on the game. Most board games do
+not have such mechanics, so this is a reasonable solution.
+  This also means that the client must be able to deal with such
+incomplete information, it must accomodate such "incomplete objects and
+data".
+
+Problem 1: if the flow of the game is completely public, it is 
+impossible to have complicated "generators" that create random content 
+that is hidden for some time.
+
+Solution 1: there will be a special type of functions called black-box
+functions. The way it is executed is hidden, only the "visible" effects
+(like creating an object, changing public value, attaching or
+detaching, ...) are communicated to the clients.
+
+Problem 2: its impossible to respond to functions used inside black-box
+functions. By "responding", we mean effects like:box
+- Whenever a creature is dealt damage, ...
+- Whenever a player casts a spell, ...
+...
+
+Solution 2a: another special type of function, called white-box function.
+White-box functions are always communicated to clients, even if they were
+called from inside of a black-box function.
+
+Solution 2b: there's no need for a solution. Black-box functions are likely
+to be used only in such "generators", and there's no need to respond
+to function calls inside them.
+
+------------------------------------------------------------------------
+
+A possible solution to communication is this:
+
+The only times where something needs to be communicated are when states
+are reached, or when random values are generated. (Generally, when
+there is a source of nondeterminism.) The rest can be simply computed.
+So whenever a state is reached, we communicate the properties of all
+objects, and whenever a player takes an action, we communicate that
+action to all players (including the one taking it to confirm that it
+did indeed happen).
+
+This is not entirely true -- the problem is with games that involve
+history. It's also difficult to visualize the game with such limited
+information, for precisely the same reason -- the flow of the game
+is not visible. So this solution is not so great.
+
+One solution to this problem is to transmit the rest of the game
+as if it were a black box -- just communicate the visible effects,
+not the flow (since the important parts of flow are covered by states).
+Another solution is to communicate the entire execution path (only
+the parts when there are multiple paths == forks).

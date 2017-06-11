@@ -1,0 +1,7 @@
+The contents of this directory and its subdirectories are not meant
+to provide any value to the outside observer. They were written
+mainly for my personal use. You may find it educational, but with
+highest probability you'll find it an incomprehensible and
+disorganized mess.
+
+You have been warned.

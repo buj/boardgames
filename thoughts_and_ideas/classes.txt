@@ -1,0 +1,16 @@
+Inheritance, interfaces, and all that high object-oriented stuff
+complicates the design of visibility and many other parts of the
+system. So we will omit these features, and the resulting "class
+infrastructure" will very much resemble xml-objects, like this:
+
+Classes are merely a way to describe a parametrized object, a way
+to construct it. There is no such things like "this object has this
+class". A class simply defines a specific set of objects, with
+specific inner workings, specific properties, specific methods, ...
+The name of the class is not important, it is used only during
+construction of such objects. There are no types other than
+integer, string, and object reference.
+
+An important consequence of this is that the language can not be
+checked for a certain type of errors, like "object is of a type
+that doesn't have a method named HelloWorld".

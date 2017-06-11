@@ -1,0 +1,9 @@
+Think of the visualizer/human client as an AI -- it is receiving
+exactly the same data from the server as an AI player would receive,
+and it is sending the same data too (because it essentially is an
+AI player except for the "AI" part).
+
+The visualizer must be able to determine the current physical and
+logical state of the game, and it must be able to visualize the flow
+of the game. These are all the things that the human player needs to
+make an informed decision (or to enjoy playing the game).

@@ -1,0 +1,35 @@
+In order for server to be able to communicate to client the substituted
+values, there must be a mapping between server's object ids, and
+client's object ids. In such a case, however, unintended information
+can be preserver. For example:
+
+1. When you choose a card in an opponent's hand, you're effectively
+placing a sticker on it saying "this card is the card that was chosen".
+And this ruins anonymity, becasue it sets this card apart from other
+cards in that player's hand.
+
+The solution is to introduce "anonymous domains". These are special 
+types of nodes, which preserve the anonymity of all nodes attached to 
+them. The idea is to recreate all the nodes (in random order) in the 
+domain whenever information about them leaks. This is however only an 
+idea, and there are many special cases and technicalities that are 
+unresolved, for example:
+
+1. By destroying them and recreating them, all historic information
+about them is "unlinked" -- we only know that one of these objects
+was involved in the historic event, but we do not know which one.
+Though this can be considered a desired effect, the point of
+anonymity.
+
+2. Suppose the card is first revealed, and then it is hidden.
+Revealing the card essentially sets it apart from other cards in hand,
+so the card should leave the domain. But then, it returns into the
+domain when it is hidden.
+
+Until then, we just have to deal with the fact that the information
+leaks.
+
+And what is the problem with leaking such information anyway?
+Someone could engineer his own client program which would exploit these
+leaks. So if we assume the client is honest and doesn't look at object
+ids unless it wants to communicate it to server, there's no problem.

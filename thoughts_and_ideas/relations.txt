@@ -1,0 +1,9 @@
+function
+  tags:
+    black-box
+    white-box
+    constant
+  return type
+  name (function identifier)
+  name-value list
+  block of code

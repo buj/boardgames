@@ -1,0 +1,25 @@
+The language should be unfailable, which means that it is impossible
+to crash or obtain a similar unsatisfying result from the game. This
+is because static checking for errors (other than syntax errors)
+is not possible, and the point of the language is to provide the
+utilities needed to create a board game, not to provide ultimate
+testing and debugging capabilities.
+
+This means that executions which would be normally result
+in a crash or undefined behaviour must have a well defined meaning.
+The following is a list of such executions:
+
+- Division or modulo by zero.
+- Providing an incompatible list of values to a command/function/...
+...
+
+The following are syntax errors that can be checked before runtime:
+
+- Wrong number of arguments provided to a command/function/...
+- Unrecognized token. (Call of an undefined function? Increment an
+  unknown variable?)
+...
+
+[Syntax error checking doesn't have priority, because it is useful only
+when the language exists and does something. Achieving that should
+be our top priority.]

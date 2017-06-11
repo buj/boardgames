@@ -1,0 +1,82 @@
+Object is composed of object fields. An object field can be...
+
+
+1. A "while" clause. The while clause has a condition and a wrapper.
+During each step of execution, the condition is checked, and if it is
+true, the wrapper is wrapped around the target function/property/...
+or it remains wrapped around it. If it is false, it is unwrapped
+from the target. This can accomodate for the following effects:
+
+- As long as you control another Elf, this creature gets +2/+2.
+- This creature has flying as long as you control an artifact.
+...
+
+
+2. A "whenever" clause. It has a condition and a body. During each step
+of execution, the condition is checked, and if it is true, the body is
+put onto the stack. This can accomodate for the following effects:
+
+- Whenever a creature is dealt damage, its controller loses 5 life.
+- Whenever you draw a card, target opponent discards a card.
+...
+
+This must however be combined with the history module to achieve
+the best effects, because we are constantly checking for some event,
+and only the history module can look into the past. (For example, if
+we wanted to see if the value X changed, we could have something like
+"X and not (before X)".)
+
+
+3. A "when" clause. This is similar to the whenever clause, but once
+it is triggered, the object loses this field so it can be triggered only
+once. [Doesn't have priority, because functionally it is equivalent to
+the whenever clause, and for most purposes it is more inconvenient.]
+
+
+The aforementioned fields are so-called "ability" or "effect" fields,
+because they actively influence the game. What follows are the remaining
+passive fields, which are more local and do not have impact on the
+game on their own.
+
+
+4. A "property". It has a body that is executed when the property is
+called. It mustn't modify the game state in any way. A property is
+essentially a (pure) function that takes no arguments and returns
+a value. Some examples of properties are:
+
+- A creature's power and toughness, name, subtype, ...
+...
+
+
+5. A "method". It is similar to a normal procedure/function defined out
+of the object's body, except that it can work with the fields of the
+object without having it passed as an argument. It is bound to the
+object, and any wrappers around this procedure only apply to the
+object, not to any other objects that were constructed with the same
+constructor. [Doesn't have priority, for reasons. But it is stronger
+than the property field.]
+
+
+6. A "tag". This is essentially a property in the normal sense, but
+unlike the property field, it has no body and doesn't return a value.
+It is simply there, and one can check whether an object has this tag
+or not. [Doesn't have priority, because functionally it is weaker than
+any other field. Though it is more convenient in some cases.]
+
+
+7. A "variable". It has a type (integer, string, ...) and a value. A
+variable's value, unlike that of a property, can be directly changed by
+assignment, increment, decrement, ...
+[The following is no longer considered relevant.] {Its value, unlike
+other fields, is inaccessible to the clients (it is however accessible
+to the server at all times, even from outside of the object). If you
+wish to make it accessible, you can make a property whose return value
+is the value of the variable.
+  The server should not make decisions ("if" statements, ...) based on
+the value of the variable, because such decisions would not be
+transparent to the client.}
+  Examples:
+
+- The amount of damage the creature has taken this turn.
+- Amount of culture accumulated during the game.
+...

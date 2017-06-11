@@ -1,0 +1,5 @@
+Implement the stuff in such a way that it can be used both as a library,
+and as an interpreted language. The library contains all the constructs
+of the language, and from these constructs, it is possible to create
+the game. The interpreter merely creates the game from a text
+description.

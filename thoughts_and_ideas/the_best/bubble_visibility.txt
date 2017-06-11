@@ -1,0 +1,17 @@
+Things inside the bubble have all their fields revealed to all players,
+and behave as if they had those fields.
+
+Things outside of the bubble do not have to have their
+fields revealed to all players. Only a select few
+can see them, which means that they know of their existence and of
+their value. Such things behave as if they didn't have these
+fields.
+
+This enforces that everything that has direct impact on the game
+must be visible to all players.
+
+The basic unit that can be inside/outside the bubble is a
+field itself, not an object. Note that revealing all fields of an
+object doesn't provide the same information as revealing the object
+itself, because in the former, there is no guarantee that there are
+no further fields. (Revealing an object reveals ALL its fields.)

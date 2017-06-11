@@ -1,0 +1,34 @@
+Black-box function: a function whose flow is not communicated to the
+client, but only its visible effects are communicated. This enables
+the server to hide the values of some variables from the client.
+
+White-box function: a function whose calls and flow are always
+communicated to the client, even when called from inside a black-box
+function. This means that a white-box function can always be responded
+to, regardless of from where it was called.
+  A player can be asked to provide a value only inside a white-box
+function. Otherwise, that player would have no clue what to provide
+and how it would be used when asked from inside a black-box function
+(or from inside a function that was called by a black-box).
+
+------------------------------------------------------------------------
+
+Essentially, a function is a named block of code. So almost all things
+applicable to functions should be applicable to arbitrary blocks
+of code -- black-box, white-box, substituted values for variables
+(function arguments), ...
+
+The only things special about functions are:
+
+1. They are named, so they can be wrapped with wrappers, can be
+responded to, and can be called, unlike blocks of code (which are
+anonymous). They may also return values.
+
+2. Functions defined inside classes have a set of default, always
+accessible variables. They can also be constant, which means they
+do not modify these class instance variables.
+
+3. A function returning non-void is a pure function. If any
+state-changing effects are used inside such a function, these are
+reverted upon returning from it. (This is useful in making things like:
+"What would be this value if this has happened? Would this be true? ...")

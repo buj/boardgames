@@ -1,0 +1,64 @@
+States are composed of state fields. A state field can be...
+
+
+1. An "action". It has a player specifier, an argument list, and
+a body. The player specifier is a predicate that determines who can
+execute the action and who cannot. The argument list is the list of
+variables whose values the player should determine. The body is
+executed when the player takes the action and (correctly) chooses
+argument values.
+  Examples of actions are:
+- Pick an instant from your hand, and play it if you have enough mana
+  in your mana pool.
+- Choose a creature with an activated ability. If the cost can be paid,
+  pay it and activate the ability.
+- Choose a card from the card row and put it into your hand.
+- Each player chooses his actions for this turn, and the order in which
+  he will play them out. (Dungeon Lords)
+...
+
+
+2. An object-like clause. These are the same clauses that are defined
+for objects, and they have the same meaning here. They are active for
+as long as the state is on the stack. [Doesn't have priority, because
+it doesn't add any new functionality. The same can be accomplished by
+creating an "emblem" when the state starts, and destroying it when the
+state ends.]
+
+
+3. An ending condition. Whenever the state becomes the top of the
+stack, that is, whenever there is nothing to be executed, we check
+if the ending condition is met. If yes, then we return from the state.
+(Alternatively, a next state can be specified, and in such a case
+we replace the current state with the next state.)
+  An ending condition must be specified for each player. The purpose
+of this is to limit the player's time: if the player's time runs out
+while his ending condition is not met, he loses the game (or something
+similarly horrible). When his ending condition is met, the player stops
+losing time. Only when all timers are stopped can the game move
+on. (The ending condition defaults to "true", which is used when the
+player is not making decisions in that state.)
+
+An alternative (or supplement) to an ending condition is an ending
+statement, which can be called inside an action. It ends the timer of
+the player that used the action.
+
+
+4. A starting/ending procedure. These are executed when the game
+arrives at the state, or when it departs from it. They mustn't accept
+any arguments. (If a state could have object-like clauses, passing
+arguments to the starting procedure could be accomplished by passing
+arguments to its constructor, which would initialize the variables
+used during the start. There is also a (different) construct that
+could be used for passing arguments to the ending procedure.)
+[Doesn't have priority, because the same functionality can be
+accomplished by having a "master procedure" from which everything
+is called, and which represents the entire game logic.]
+
+
+5. A name-value pair. It can be used during actions and 
+starting/ending procedures. It is initialized when the state 
+is called by providing it with a list of values -- the constructor is 
+called and the list is passed as arguments. (There need not be a 
+constructor, in which case the arguments are simply initialized to the 
+provided values, and nothing more complicated takes place.)

@@ -1,0 +1,14 @@
+Sometimes, not only object data itself is hidden (like what cards
+you have in hand), but also the way the objects are connected to each
+other is hidden. 
+
+For example:
+
+- In the game Battleships, you do not know the location of your
+opponent's ships. (Although there are other problems with implementing
+this game, like: each ship covers not one cell, but multiple cells,
+which can not be modeled with a simple attachment.)
+
+- In the game Dungeon Lords with the Festival expansion, during the
+festival, each player first hides all his imps, and then reveals
+a subset of them.

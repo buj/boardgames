@@ -1,0 +1,32 @@
+The essence of being hidden is that the object is not visible, not
+that it is disguised. With invisibility, it is relatively easy to
+achieve a disguise, but with disguise, it is difficult to achieve
+invisibility.
+
+Therefore, there will be no disguises, but invisibility. An object
+can be visible to some players, but not other players. Being visible
+means that all its variables are visible, and the location of the
+object (what it is attached to) is also public.
+
+An object can have impact on the game only if it is "revealed".
+A revealed object is visible to all players, but an object visible
+to all players need not be revealed. Aside from revealing the object,
+it is possible to "show" it to a player, which preserves its
+status as unrevealed.
+  One can think of revealed objects as if they were inside a bubble.
+Only objects inside this bubble can have direct impact on the game,
+but they must be visible. There can be objects outside this bubble,
+and they can be disguised/invisible, but they cannot have direct impact
+on the game unless they enter the bubble.
+
+The question now is: what is the smallest unit that can be invisible?
+Is it an object? Or one of its properties? Should invisibility behave
+like incomplete information -- like knowing that an object is of a
+certain class, but now knowing which of its subclasses (if any) it is?
+
+------------------------------------------------------------------------
+
+With invisibility, it should be possible to achieve what anonymous
+domains are trying to achieve, in a similar manner -- after the
+information is leaked, hide all the objects in the domain, and then
+reveal/show them, to unlink the information.
