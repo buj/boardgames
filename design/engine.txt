@@ -1,0 +1,35 @@
+The flow follows the following pattern:
+
+0. Do some calculations, with no direct impact on the world.
+
+1. Execute something that has direct impact on the world. That means
+  that all fields must be recalculated, and then, all triggers must
+  be checked. The executing object notifies the world.
+
+Then, we "check state based things":
+
+2. The world recalculates all fields.
+
+3. The world checks all triggers. Those that have triggered are not
+  put immediately on the stack, but are put on a temporary stack. Only
+  when all triggers were checked are they moved from the temporary stack
+  onto the main stack, in order based on priority. Moving all the items
+  is an atomic operation.
+    This can in turn cause the stack to notify the world of a change,
+  which then recursively starts from step 2. And possibly again,
+  and again, and ...
+
+4. The world checks the top of the stack. If there is a call to a
+  procedure or state, and it didn't start execution yet, start it
+  and remember that it started execution.
+
+5. (The procedure or state is being executed.)
+
+6. Remove the top of the stack (causing a recursive call to the step 2),
+  and return control to the previously executed thing.
+
+During atomic operations, state based things are not checked. The first
+time they are checked are when the operation completes. That means that
+during step 1, the executing object doesn't notify the world.
+  There are, however, a few problems associated with implementing
+atomic and silent procedures. We will omit both for now.

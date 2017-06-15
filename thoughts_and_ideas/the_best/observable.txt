@@ -1,0 +1,68 @@
+Only events which can be responded to need to be observable. (By
+observable, we mean that it is possible to see it happening and react
+to it.) For other types of events, we don't need to know that they
+occured, since such an information would not modify our behaviour
+anyway.
+
+The game can be divided into four parts:
+
+1. The physical state of the game, which covers all the objects and
+connections between them. All events happening here should be
+observable. However, it is odd to respond to certain types of events,
+such as "X gained field Y".
+
+Following is a list of (not necessarily all) types of events from here:
+- object X (which was not attached to anything) was attached to Y
+- object X was detached
+- object X was created, <description of X> (from our perspective)
+- object X was deleted
+- (field X was created)
+- (field X was deleted)
+- variable X was assigned the value Y
+- integer variable X was incremented by Y
+
+The following are not events, even though one could consider them events
+in normal language:
+- indirect change in a property X's value
+- indirect change in anything (?)
+Indirect change is a change caused by changing something that the
+thing depended on, not by changing the thing itself.
+
+
+2. The logical state of the game, which covers the stack, what effects
+are on the stack, ... Only few events that happen here should be
+observable, such as start and end of procedure or action. (This is
+the same as observing it entering and leaving the stack.) Some
+examples of non-observables: control flow statements, functions,
+expressions, ...
+  Possible summarization: The stack should be observable. Most things
+that directly impact the game use the stack, possibly the only
+exceptions being the simplest of operations, such as assignment to
+a variable, increment, ... which are covered by the physical part.
+
+
+3. Visibility. This covers which fields are hidden from which players,
+and which fields and objects are inside the bubble. This is a special
+part, because it should naturally be observable for the purposes of
+history, but it also seems odd to respond to events like
+"X was revealed to Y".
+  One could argue that this part is an extension of the physical part,
+because only together do they yield an image of the world, from our
+perspective.
+
+Following is a list of events from here:
+- object X was revealed to player Y
+- field X was revealed to player Y (existence of field X was implicitly
+  revealed to all players) (?)
+- object X was moved into the bubble
+- field X was moved into the bubble (?)
+
+
+4. The history of the game, which covers the past of the other
+parts. This covers only the observable events, because other events
+are not visible from here. Nothing in here is observable.
+  What is observable in history should be sufficient to reconstruct
+the game from scratch, such as when a client disconnects. Note that
+each client has a separate history, because they see different things.
+The "game-master", who has complete information, has his own history
+too.

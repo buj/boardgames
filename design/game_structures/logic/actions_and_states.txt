@@ -1,0 +1,27 @@
+An action is similar to a procedure. It has the all the things a
+procedure has: ID, name, argument list, block of code, flags. In
+addition to that, it has a player specifier: a predicate that tells
+which players can and which can't take the action. Only those who
+satisfy the predicate can.
+  Also, its argument list is different: each name is associated with
+a predicate (or a boolean expression) that represents the type of
+the argument. Only things that satisfy the predicate can be substituted.
+  Its body can contain a special statement "end_turn", which ends the
+player's turn. (He no longer loses time, but is unable to take any
+further action. The state finishes when all players have ended their
+turn.)
+
+Summary: ID, name, typed argument list, block of code, flags,
+player specifier.
+
+------------------------------------------------------------------------
+
+A state is composed of: ID, name, argument list, list of actions.
+It is used in a similar way as a function or procedure, but it has
+different behaviour. The state is put on top of the stack, and it
+doesn't leave the stack until all players have ended their turns.
+While it is on the top of the stack, players may take actions listed
+in the state. A player who cannot take any action automatically ends
+his or her turn.
+
+Summary: ID, name, argument list, list of actions.

@@ -1,0 +1,17 @@
+How do we implement abilities such as these:
+
+- All creatures you control have flying.
+- Until end of turn, target creature gains "When this creature dies,
+  it deals 5 damage to target player."
+- Gain control of target creature for as long as you have a card in
+  your hand.
+- Other creatures you control get +2/+2.
+...
+
+They are all abilities that are saying "these things have these
+abilities". Fields, which correspond to abilities, should therefore
+be able to specify not only the effect, but also who obtains the
+effect, what conditions must be satisfied in order for him to obtain
+it. The effect also doesn't have to be a new one, it can instead modify
+an existing effect or property of the object (like power, toughness,
+...).

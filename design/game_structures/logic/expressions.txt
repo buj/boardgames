@@ -1,0 +1,42 @@
+Expressions are used in some commands. Evaluation of an expression
+yields a value, and commands can work with this value. They can be
+divided into multiple groups:
+
+1. Simple expressions. They are not composed of other things, they
+  just immediately return and have no degree of freedom. These are:
+  integer, string, boolean literals.
+
+2. State inspections: attached_to(X, Y), has_field(X, Y), X (where
+  X is path to the variable), ...
+
+3. Type predicates. They accept one argument, and return whether it
+  is of that type or not. These are: integer(X), boolean(X), object(X),
+  field(X), set(X), list(X), ...
+
+4. Function calls. Name of the function and value list must be
+  specified.
+
+5. Operators. These are: arithmetic (X + Y, -X, X * Y, X // Y),
+  logic (X && Y, X || Y, X ^^ Y, X == Y, !X), sets (X union Y, X
+  except Y, X intersect Y, X symdiff Y).
+
+6. Quantifiers. These are: exists(X), for_all(X) (where X is
+  a predicate).
+
+7. Special set expressions. These are: logical (X in Y, X is_subset Y,
+  X is_superset Y), constructive (all X (where X is predicate)),
+  parametric (is_empty X, size_of X), ...
+
+------------------------------------------------------------------------
+
+Notes for programming:
+  Expressions can be implemented directly, without
+having to consult the world or anything, because they are transparent
+(non-observable) and they have no direct impact on the world.
+  The constructor should accept other expressions as subexpressions to 
+reduce the degree of freedom to 0. Each expression object should have 
+a method "evaluate()". Alternatively, a visitor will do the evaluation.
+  Values returned are not normal Java values, but are special "Value"
+objects.
+  Function calls must have a scope specified, just like procedures and
+states.

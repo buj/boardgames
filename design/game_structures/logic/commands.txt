@@ -1,0 +1,25 @@
+Commands are the most elementary of all executables. They are used
+inside blocks of code. They can be divided into three groups:
+
+1. Control flow statements: if, for_each, while.
+
+2. State modifiers: procedure and state calls, variable assignment,
+  object attaching and detaching, object or field revealing, object
+  gaining and losing fields, return statement, ...
+
+3. Special commands: end_turn.
+
+------------------------------------------------------------------------
+
+Notes for programming:
+
+  Control flow statements can be implemented directly, because they
+are transparent and they have no direct impact
+on the world. When implementing state modifiers, keep in mind that
+the world must be a persistent data structure.
+  Each command should have a method "execute()". Alternatively,
+a visitor will do the execution for us. The execution must return
+an empty "Value" object.
+  Procedure and state calls can be called from a certain scope. That's
+how things from inside objects are called. Therefore, they must have
+a scope specified in addition to the name and arguments.

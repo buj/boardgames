@@ -1,0 +1,38 @@
+(Fields, functions, procedures, states, actions, commands are generally
+referred to as "executables". Fields are executed in a different way
+from the other things.) The jobs of this part are:
+
+1. Be able to execute executables.
+  - Each executable should have a method "execute(X, Y, Z)", where
+    X is the world containing all the objects,
+    history, and everything, Y is a list of name-value pairs, and
+    Z is a list of name-executable pairs.
+    The pairs are needed for the retrieval of variable values and
+    for executing named executables. The method returns the same value
+    as the one returned by the virtual executable.
+
+The following is a description of each executable. They are further
+defined in their own separate documents.
+
+- Fields are used from the base state at the beginning of each step,
+  in the field execution phase. After this phase, all fields that are
+  in the game will not disappear until the next step's field execution
+  phase.
+
+- Functions are used when a value computed in a certain way is
+  required. They cannot modify the state of the game, their only
+  purpose is to return a value.
+
+- Procedures are used when we want to modify the state of the game in a
+  specific way. They cannot return a value. They use the stack, but can
+  be atomic, which means that there can be no response while it is being 
+  executed.
+
+- States are used when we want input from a player or multiple players.
+
+- Actions are procedures used within states. The only way an action can
+  be executed is when a player decides to take that action.
+  The arguments are provided by the player.
+
+- Commands are the most elementary executables. They are used in bodies
+  of other executables.

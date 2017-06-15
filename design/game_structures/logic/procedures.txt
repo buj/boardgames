@@ -1,0 +1,16 @@
+A procedure is similar to a function. It has all the things that
+a function contains: ID, name, argument list, block of code. In
+addition to that, it can have one of the following flags set:
+
+- Black-box. A black-box procedure is communicated differently to
+  clients. Instead of providing values that are nondeterministic
+  from the clients' perspective, it instead provides all the visible
+  effects that happen. That means that the flow inside the procedure
+  is hidden, and information can be hidden this way.
+
+- Atomic. An atomic procedure cannot be interrupted in the middle of
+  execution by triggered effects. The triggered effects are put onto
+  a reserve stack, and only when the atomic procedure finishes are
+  they put onto the stack.
+
+Summary: ID, name, argument list, block of code, flags.

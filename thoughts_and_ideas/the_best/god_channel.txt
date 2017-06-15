@@ -1,0 +1,30 @@
+At the beginning, there is nothing in the universe. Then, the game
+engine starts creating things. Suppose that the order in which the
+things are created is fixed (the objects can still be hidden).
+Then, we can deduce which object is which just by the time the object
+was created, and no amount of shuffling will erase this information,
+because we can see everything in the universe. (It is a
+"god information channel" from our perspective.)
+
+This is a problem. It appears there can be no hidden information at all,
+even though the system for hiding information exists. There is a way
+around it, but it is far away from an optimal solution:
+  We create a set of numbers from 1 to N, then randomly order it into a
+list, and for each element of the list (in the order from the
+beginning), we call a function "create(X)" which creates an object
+based on the value of X. All this is inside a black-box so that the
+information doesn't leak to the clients.
+
+Other possible ways to solve the problem:
+
+1. Have the ability to force players "out of the room" during the game
+setup, and when we are done with the setup, invite them back in. This
+would have to be done whenever we wanted to introduce new hidden
+information into the game.
+
+2. Have the ability to shuffle a set of cards IDs. This is only done
+on the server's side, because otherwise if we were to communicate the
+permutation to the clients, there would be no point in doing this.
+This is a dangerous tool and has to be used carefully, because if
+the objects are not all identical, it can lead to confusion instead
+of hidden information. (It really isn't clear what "identical" means.)

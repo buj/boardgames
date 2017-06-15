@@ -1,0 +1,24 @@
+The entire project can be divided into four parts, which will be
+implemented sequentially:
+
+1. The underlying data structures that make up the game. This contains
+the minimum functionality required to work, it doesn't contain any
+convenience things for users.
+
+2. The semantics, the way the data structures interact with each other
+to create the game. The logic of the engine. This part will be described
+in "game_structures/logic".
+
+3. The language, which is used by users to describe the game. This
+can contain more complicated convenience things, which are then
+translated by the interpreter into the data structures of the game.
+
+4. The server and the client, the communication protocol. Both sides
+simulate the game, so that the data transferred from server to client
+is kept to minimum. Server sends to client only data for
+nondeterministic things, like random values, execution inside a
+black box, actions performed by (not necessarily other) clients,
+choices made by clients, ...
+  Client sends to server the choices it made. Both sides must be able
+to incorporate the data received into the game, and the server must be
+able to communicate the game events.

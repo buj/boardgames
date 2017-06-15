@@ -1,0 +1,15 @@
+The game structures can be divided into three parts:
+
+1. The physical components (the way they are connected and their
+description) and the stack. These are all mutable, and the changes
+must be accessible to the outside observer.
+
+2. The logic of the game. This is immutable. It covers all the
+functions, procedures, states, even those that are located in fields
+of objects. (The object's possession of these fields is mutable, but
+the description of the fields themselves is not. The field wraps the
+contents, but it isn't equivalent to them.)
+
+3. The history of the game. This covers only the first part: the objects
+and the stack. The flow of the game and the computations outside of the
+stack are inaccessible.

@@ -1,0 +1,54 @@
+The jobs of this part are:
+
+1. Keep track of which object is attached to which.
+  - Enable changing the connections with methods "attach X to Y" and
+    "detach X". Enforce correctness of the state. Do not allow
+    attaching X to Y if it would create a cycle. The connections must
+    form a graph-forest.
+  - Enable observation of the changes in connection. Whenever "attach"
+    or "detach" is called, notify the observers of the call and its
+    parameters.
+  - Enable looking at the state, the way the objects are connected
+    to each other. Have a predicate "attached_to(X, Y)" which returns
+    true for pairs X, Y such that X is attached to Y.
+
+2. Know the description of each object. An object is described by the
+  fields it possesses. (Each field can be either permanent, or ephemeral.
+  Ephemeral fields vanish at the beginning of each step and are
+  recomputed during the field execution phase.)
+  We only deal with their identifiers, the description of the fields
+  themselves are not important here.
+  - Enable gaining and losing fields with methods "gain(X, Y)"
+    and "lose(X, Y)", which specify the object and the field's ID.
+    (Multiple instances of a field with the same ID are redundant.
+    The object behaves as if it had only one such field.)
+  - Enable observation of the changes in an object's fields. Whenever
+    "gain" or "lose" is called, notify the observers of the call and its
+    parameters.
+  - Enable looking at an object's fields. Have the set of its fields
+    publicly available through a method "getFields()". This is used
+    only internally, for external inspection, use "has_field(X, Y)"
+    which answers the question "Does X have field Y?"
+
+3. Keep track of all variables and their values.
+  - Enable modifying the variable's value with "assign(X, Y)", which
+    assigns the variable X value Y.
+  - Enable observation of the variable's value. Whenever "assign(X, Y)"
+    is called, notify the observers of the call and its parameters.
+  - Enable inspection of the variable's value. Have something like
+    a method "value_of(X, Y)" which returns the value of variable named
+    X of object Y.
+
+4. Keep track of the stack. The stack contains executables, like
+  procedures, states, ... Only their IDs are needed here.
+  - Enable putting something on top of the stack, and removing something
+    from the top. Have methods "put(X)" and "pop()", the latter returns
+    the ID of the executable that was removed.
+  - Enable observation of the stack. Whenever "put(X)" or "pop()" is
+    called, notify the observers of the call and its parameters.
+  - Have the contents of the stack available as a list of IDs through
+    a method "list()".
+
+All these must be persistent: the structure must be able to remember
+historic data, and it must be possible to look into the past and
+ask the same questions.

@@ -1,0 +1,16 @@
+A function consists of the following:
+
+0. Function ID.
+
+1. Name, which is used when calling the function. There cannot be
+  two functions in the same scope with the same name.
+
+2. Argument list, which is used to provide values to names. Formally,
+  it is a name list, which is used during function call to construct
+  a name-value list. (There are no variable types, that is, the
+  language is dynamically typed. That's also the reason why there is
+  no return type specified.)
+
+3. Block of code. This contains the commands that will be executed when
+  the function is called. This part can be merged with the previous part
+  to create a "block of code with references".

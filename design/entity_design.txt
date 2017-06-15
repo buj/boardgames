@@ -1,0 +1,25 @@
+The problem is: how should one implement each of the entities that are
+used in our programming language, such as variables, objects, fields,
+functions, ...?
+
+The language is unfailable. That means that everything should be able
+to interact with everything in a well defined, not necessarily useful,
+way. (There can still be some error logs about operations that are
+probably programming errors.) For example:
+
+1. It should be possible to plug into a function a different number
+  of arguments than it requires. The interpreter shouldn't crash, it
+  should go on.
+
+2. It should be possible to call an object instead of a function.
+
+The objects that describe the observable universe (physical components
+and the stack) should be persistent. It's not the world that takes care
+of the history, instead, each object inside the world takes care of
+its own history, and the world keeps the history of things that are
+not contained inside any object.
+  The times of births and deaths are also part of an object's history.
+(Most object only have 1 time of birth and at most 1 time of death.
+Granted fields are an exception to this.) It should behave so: if
+the object is accessed and it doesn't exist, it should return
+an empty value.

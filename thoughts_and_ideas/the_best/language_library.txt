@@ -3,3 +3,14 @@ and as an interpreted language. The library contains all the constructs
 of the language, and from these constructs, it is possible to create
 the game. The interpreter merely creates the game from a text
 description.
+
+The library should contain the minimum necessary for the stuff to work.
+It needn't be convenient or user friendly -- that part is taken part of
+by the interpreter, which can have more complex constructs than those
+defined in the library. For example:
+
+1. It would be annoying to have to create a new state whenever we need
+input from the user. To implement "Lightning Bolt", there would have to
+be a dedicated state that would still have to be named, have actions
+and ending conditions specified. Though the actions describe it all,
+because the ending condition is "once the action was executed".

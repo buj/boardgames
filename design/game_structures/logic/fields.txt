@@ -1,0 +1,57 @@
+Fields represent anything that an object can have. They have an ID, a 
+name, a priority, and a body. Two fields are equivalent if they have 
+the same ID. An object cannot have more than one instance of a field 
+with a specific ID -- the instances beyond the first are ignored.
+  It can have multiple instances with the same name, however. Such 
+instances behave as a single composed instance, and they are composed 
+based on their priority.
+  Normally, the instance with the highest priority is taken as the
+representative, and the other instances are ignored. However,
+an instance can have a "super" clause that imports the next instance's
+body (or if it is a function, it is called with the provided arguments
+instead). This way, instances are wrapped around other, lower priority
+instances.
+
+There are several types of fields, each of them is described below.
+
+1. A value field. (In other words, a variable.) In addition to the
+  standard field's things, a value field has a value.
+
+2. A hard link. This is essentially a value field, but with these
+  differences:
+  - It can contain only an object reference, a list of object
+    references, or a set of object references.
+  - It attaches the object to the owner of the field. Each object
+    can only be attached to 1 other object. If a hard link of A
+    is assigned a value B, that means that B was attached to A. If
+    B was previously attached to C, now B is no longer attached to C.
+    So the C's hard link is set an empty value.
+
+3. A function or procedure. (It's not that the field contains
+  the function, the field IS the function. Same goes for procedures.)
+
+4. A possession field. These grant fields to (not necessarily other)
+  objects, and example being "Other creatures you control have flying."
+  They have an object specifier (a predicate that specifies which
+  objects have the field), and a field specifier (which specifies
+  what field they possess).
+    The granted field can either be constructed in place, or it can
+  be a reference to a field defined elsewhere. A copy specific for the
+  target is granted, so that when a value field is granted to 2
+  objects, they can have different values.
+    The granted field's existence is bound to the existence of the
+  owner of the possession field. The field is therefore temporary,
+  not permanent, and its existence must be checked at each step.
+
+5. A conditional field. These grant fields to the owner under specific
+  circumstances, an example being "This gets +2/+2 as long as you
+  control another creature." They have a condition (a predicate),
+  and a field specifier (which specified what field they possess).
+    The field granted is temporary, similarly to the field granted by
+  a possession field.
+
+6. A triggering field. These call procedures when the circumstances are
+  right, an example being "Whenever you gain life, each opponent loses
+  that much life." They have a condition (a predicate), and a body that
+  is executed whenever the conditions are satisfied. (The condition is
+  checked after each step, after state-based effects take place.)
