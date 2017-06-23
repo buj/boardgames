@@ -1,0 +1,55 @@
+Stack manager is the object that is interacting with the outside world.
+Inside of it, there is a persistent stack object that contains the
+state of computation.
+
+A stack is made of stack elements. Each stack element is composed of:
+
+1. A link to the previous element, or a special value if there is no
+  such element.
+2. Whether the element is major or minor. State-based effects are
+  checked only when a major element is put on or removed from the top
+  of the stack.
+3. Names defined by this element and values assigned to them.
+4. A link to the block of code being executed.
+
+The entire stack is then represented by the element at the top.
+
+The stack manager has a method "next()" which executes the next step.
+There are multiple cases:
+
+1. Nothing entered and nothing left the stack. The top element is
+  copied, the copy is modified to reflect changes, and the copy is
+  declared the top of the stack.
+
+2. Something entered the stack. We do step 1. Then, a new element is
+  created, which represents the thing entering the stack. The values
+  of the new element are set appropriately, and the new element
+  is declared the top of the stack.
+
+3. Something left the stack. (We may optionally do step 1.)
+  The top's previous element is declared the top of the stack.
+
+If the top of the stack was an expression (it had a value), its
+element should contain the name that will be assigned the value.
+(This is always done on the previous element.)
+
+Generally, each element should contain all the data necessary to
+restart computation from that point. It should describe the state of
+computation. This is to ensure that the stack is enough to describe
+the state of execution.
+
+------------------------------------------------------------------------
+
+Each command type and each expression type has a corresponding element
+that contains the state of execution. The command/expression contains
+only the description of the execution.
+  An element has a method "next()" that returns an element with the
+following meaning: if I were the top of the stack, what element would
+be at the top of the stack after I executed a step of my command
+or expression?
+  The element has access to the command/expression it is trying to
+execute. Each command and expression type has a method "getElement()"
+which returns a corresponding element, in the state
+"starting execution of this".
+  This way elements can create new elements. This is needed when
+something new is put on top of the stack.
