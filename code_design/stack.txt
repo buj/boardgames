@@ -53,3 +53,26 @@ which returns a corresponding element, in the state
 "starting execution of this".
   This way elements can create new elements. This is needed when
 something new is put on top of the stack.
+
+------------------------------------------------------------------------
+
+The elements do not contain the implementation of the procedure. (If it
+did, it would be difficult to simulate its execution or get its result
+-- one would have to create the element instead of just calling the
+appropriate function.) The implementation is contained in the used
+objects. For example, addition of 2 integers would be implemented inside
+the "Integer" class, not in the element corresponding to addition.
+
+------------------------------------------------------------------------
+
+Each element can be a return point. Whenever a return command is called,
+the stack is popped until a return point element is on the top. This
+element has information about where the returned value should be stored.
+The return point is popped, and the below element's name-values are
+updated.
+
+This is to implement standard behaviour of if, while, ... cycles. In
+our implementation, they all use the stack. However, standard behaviour
+is that when return is called from inside of them, not only is their
+corresponding element popped, but everything is popped until the top
+of the stack contains a function call. This is popped as last element.

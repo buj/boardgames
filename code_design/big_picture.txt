@@ -1,0 +1,14 @@
+The world contains 3 things: the previous world, the stack, and the
+thing trie.
+
+The stack contains: the stack below, the field trie, the return
+location, whether the stack is minor or major, whether the stack is
+a return point.
+
+The thing trie is a trie, each of its nodes may contain a thing.
+
+A thing consists of a field-bag trie.
+
+A field-bag contains fields with the given name. Each field has its
+priority. The field-bag knows the fields in order sorted by
+priorities.

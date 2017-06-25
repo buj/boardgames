@@ -1,0 +1,31 @@
+It is important to know which types of things have which of the
+following qualities. (By things, we mean objects, fields, ...)
+
+1. Referencability. A thing that is referencable must be stored in
+  the top level of the object tree. That means it cannot hang from
+  another thing, it must hang from a node corresponding to the
+  thing's ID. (This is because referencable things can have more than
+  1 reference to them, and a direct reference to the thing would cause
+  problems with persistency.)
+
+2. Adjustable visibility. Things with this quality can be hidden or
+  revealed to players at will.
+
+3. Adjustable reality. Things with this quality can be realized and
+  unrealized at will. Things without it are realized or unrealized
+  based on the parent's visibility. (A thing is realized if it can
+  have direct impact on the game, that is, it is "in the bubble". A
+  realized thing must be visible to all players.)
+    A thing has adjustable reality if and only if it has adjustable
+  visibility. Together, these two qualities are called "adjustability".
+
+Normally, there would be 3 types of things:
+
+1. Objects. They are referencable and adjustable.
+2. Field managers. They are not referencable, but are adjustable.
+3. Fields. They are not referencable and not adjustable.
+
+However, this has problems with referencing object variables and methods
+inside the same object's methods. When an object's method is called, the
+object's fields must be loaded, and therefore they must be referencable.
+Everything should be referencable then.

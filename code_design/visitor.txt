@@ -1,0 +1,6 @@
+Suppose A wants to use B, but doesn't know B's type. This can be solved
+with the visitor pattern. However, if A expects B to be of specific
+type, a more reasonable approach is casting B to that type. The visitor
+is useful only if there are multiple viable types, and the behaviours
+are different for each type. (Otherwise, the implementation for the
+unexpected types is not important / empty.)

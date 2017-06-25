@@ -1,0 +1,25 @@
+The things are addressed logically, which means that addresses have
+the following format: <object_id>.<field_name>.<field_name>.(...)
+The addresses are resolved at the very last moment when they are needed.
+
+That's because early binding would make it impossible to change the
+address once it is bound. And the address are going to change due to
+state based effects.
+
+------------------------------------------------------------------------
+
+The name-value tree consists of memory cells. Each memory cell can be
+either local, which means it doesn't represent a place in the global
+memory. Or it can be global, then it contains an address which it
+represents.
+
+A local cell contains all its data on the stack. It needs to know its
+value and that it is local. Examples of local cells: function arguments,
+named values, ... These are essentially symbolic links. They can be
+chained -- a symbolic link on stack can point to another symbolic link
+in the real memory, which can point to another symbolic link, etc.
+
+A global cells contains the address of the global data it represents.
+It needs to know the address and that it is global. Examples of global
+cells: object fields, ... This is essentially real data, a hard link
+(though there can be only 1 hard link).

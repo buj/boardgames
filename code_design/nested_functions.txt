@@ -1,0 +1,22 @@
+Suppose the objects are stored in a trie, the location determined by
+the ID of the object. Objects themselved contain a trie, which contains
+all its fields.
+
+Now, suppose we want to implement this: "Go to object X, then find Y."
+
+We could implement it as 2 functions:
+- First function implements "... then find Y."
+- Second function implements "Go to object X, then call the first
+  function."
+
+This is ugly, mainly the second function. Instead of it, we would like
+a function that does this: "Go to object X, then do A" where A is
+specified by us, without having to reimplement the part
+"Go to object X".
+
+We will have a class "NestedFunction" with methods "call()" and
+"next()". The call method represents the standard function call, the
+next method returns the next NestedFunction to be applied. This defaults
+to identity.
+
+The arguments of the NestedFunction are set when it is constructed.
