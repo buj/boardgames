@@ -13,7 +13,12 @@ public class ValueFieldAssign implements Function<Field, Field> {
   
   @Override
   public Field apply(Field field) {
-    ValueField valueField = (ValueField)field;
-    return valueField.setValue(value);
+    try {
+      ValueField valueField = (ValueField)field;
+      return valueField.setValue(value);
+    }
+    catch (ClassCastException exc) {
+      return field;
+    }
   }
 }

@@ -16,10 +16,10 @@ public class ForEach<T> implements Function<Trie<T>, Trie<T>> {
   @Override
   public Trie<T> apply(Trie<T> trie) {
     Iterator<Character> it = trie.keyIterator();
-    Trie<T> res = trie.newValue(nextFunction.apply(trie.getValue()));
+    Trie<T> res = trie.setValue(nextFunction.apply(trie.getValue()));
     while (it.hasNext()) {
       Character ch = it.next();
-      res = res.newChild(ch, apply(trie.next(ch)));
+      res = res.setChild(ch, apply(trie.next(ch)));
     }
     return res;
   }

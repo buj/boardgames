@@ -4,8 +4,8 @@ import java.util.function.Function;
 import java.util.Stack;
 
 public class Find<T> implements Function<Trie<T>, Trie<T>> {
-  private final String name;
-  private final Function<T, T> nextFunction;
+  protected final String name;
+  protected final Function<T, T> nextFunction;
   
   public Find(String name, Function<T, T> nextFunction) {
     this.name = name;
@@ -15,15 +15,15 @@ public class Find<T> implements Function<Trie<T>, Trie<T>> {
     this(name, Function.identity());
   }
   
-  private Trie<T> apply(Trie<T> trie, Stack<Character> stack) {
+  protected Trie<T> apply(Trie<T> trie, Stack<Character> stack) {
     if (stack.empty()) {
-      return trie.newValue(nextFunction.apply(trie.getValue()));
+      return trie.setValue(nextFunction.apply(trie.getValue()));
     }
     Character ch = stack.pop();
     if (!trie.hasNext(ch)) {
       return trie;
     }
-    return trie.newChild(ch, apply(trie.next(ch), stack));
+    return trie.setChild(ch, apply(trie.next(ch), stack));
   }
   @Override
   public Trie<T> apply(Trie<T> trie) {

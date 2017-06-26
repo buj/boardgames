@@ -9,6 +9,11 @@ public class NameList implements Iterable<String> {
   public NameList(String[] names) {
     this.names = names;
   }
+  
+  public int getLength() {
+    return names.length;
+  }
+  
   public class NameIterator implements Iterator<String> {
     private int position;
     private final NameList source;
@@ -17,6 +22,7 @@ public class NameList implements Iterable<String> {
       this.position = 0;
       this.source = source;
     }
+    
     @Override
     public boolean hasNext() {
       return position < source.names.length;
@@ -24,12 +30,13 @@ public class NameList implements Iterable<String> {
     @Override
     public String next() {
       if (!hasNext()) {
-        throw new NoSuchElementException("End of pointer.");
+        throw new NoSuchElementException("End of name list.");
       }
       position += 1;
       return source.names[position - 1];
     }
   }
+  @Override
   public NameIterator iterator() {
     return new NameIterator(this);
   }

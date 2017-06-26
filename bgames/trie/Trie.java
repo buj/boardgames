@@ -29,13 +29,13 @@ public class Trie<T> {
     return table.keySet().iterator();
   }
   
-  public Trie<T> newValue(T value) {
+  public Trie<T> setValue(T value) {
     if (value == this.value) {
       return this;
     }
     return new Trie<T>(value, this.table);
   }
-  public Trie<T> newChild(Character ch, Trie<T> child) {
+  public Trie<T> setChild(Character ch, Trie<T> child) {
     if (child == next(ch)) {
       return this;
     }

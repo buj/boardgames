@@ -1,5 +1,5 @@
 package bgames.stack;
 
 public interface Executable {
-  Stack getStack();
+  StackState getState();
 }
