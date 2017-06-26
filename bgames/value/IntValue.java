@@ -25,4 +25,10 @@ public class IntValue implements Value {
     }
     return this;
   }
+  public IntValue modulo(IntValue operand) {
+    if (operand.value != 0) {
+      return new IntValue(value % operand.value);
+    }
+    return this;
+  }
 }

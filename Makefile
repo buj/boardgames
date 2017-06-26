@@ -10,8 +10,11 @@ other:
 stack: expressions	
 	javac bgames/stack/*.java
 
-expressions: binary
+expressions: unary binary
 	javac bgames/stack/expressions/*.java
+
+unary:
+	javac bgames/stack/expressions/unary/*.java
 
 binary:
 	javac bgames/stack/expressions/binary/*.java

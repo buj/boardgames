@@ -9,4 +9,20 @@ public class BoolValue implements Value {
   public boolean getValue() {
     return value;
   }
+  
+  public BoolValue and(BoolValue operand) {
+    return new BoolValue(value && operand.value);
+  }
+  public BoolValue or(BoolValue operand) {
+    return new BoolValue(value || operand.value);
+  }
+  public BoolValue equals(BoolValue operand) {
+    return new BoolValue(value == operand.value);
+  }
+  public BoolValue xor(BoolValue operand) {
+    return new BoolValue(value != operand.value);
+  }
+  public BoolValue negated() {
+    return new BoolValue(!value);
+  }
 }

@@ -5,17 +5,17 @@ import bgames.stack.StackState;
 import bgames.stack.OutsideWorld;
 import bgames.value.Value;
 
-public class ConstantValue implements Expression {
+public class Constant implements Expression {
   private final Value value;
   
-  public ConstantValue(Value value) {
+  public Constant(Value value) {
     this.value = value;
   }
   
   public static class State extends StackState {
-    private final ConstantValue source;
+    private final Constant source;
     
-    public State(ConstantValue source) {
+    public State(Constant source) {
       this.source = source;
     }
     
