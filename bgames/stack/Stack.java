@@ -1,29 +1,24 @@
-package bgames.world.stack;
+package bgames.stack;
 
 import bgames.trie.Trie;
-import bgames.world.Thing;
-import bgames.world.World;
+import bgames.thing.Thing;
+import bgames.World;
 import bgames.value.Value;
 
 public abstract class Stack {
   protected final Stack below;
-  protected final Trie<Value> nameValues;
-  protected final String returnPoint;
+  protected final Trie<Value> values;
   
-  public Stack(Stack below, Trie<Value> nameValues, String returnPoint) {
+  public Stack(Stack below, Trie<Value> values) {
     this.below = below;
-    this.nameValues = nameValues;
-    this.returnPoint = returnPoint;
+    this.values = values;
   }
   
   public Stack getBelow() {
     return below;
   }
-  public Trie<Value> getNameValues() {
-    return nameValues;
-  }
-  public String getReturnPoint() {
-    return returnPoint;
+  public Trie<Value> getValues() {
+    return values;
   }
   
   public class OutsideWorld {

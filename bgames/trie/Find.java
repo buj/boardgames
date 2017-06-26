@@ -3,14 +3,16 @@ package bgames.trie;
 import java.util.function.Function;
 import java.util.Stack;
 
-public class Find<T> {
+public class Find<T> implements Function<Trie<T>, Trie<T>> {
+  private final String name;
   private final Function<T, T> nextFunction;
   
-  public Find(Function<T, T> nextFunction) {
+  public Find(String name, Function<T, T> nextFunction) {
+    this.name = name;
     this.nextFunction = nextFunction;
   }
-  public Find() {
-    this(Function.identity());
+  public Find(String name) {
+    this(name, Function.identity());
   }
   
   private Trie<T> apply(Trie<T> trie, Stack<Character> stack) {
@@ -23,7 +25,8 @@ public class Find<T> {
     }
     return trie.newChild(ch, apply(trie.next(ch), stack));
   }
-  public Trie<T> apply(Trie<T> trie, String name) {
+  @Override
+  public Trie<T> apply(Trie<T> trie) {
     return apply(trie, Trie.strToStack(name));
   }
 }

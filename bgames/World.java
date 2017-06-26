@@ -1,7 +1,8 @@
-package bgames.world;
+package bgames;
 
+import bgames.thing.Thing;
 import bgames.trie.Trie;
-import bgames.world.stack.Stack;
+import bgames.stack.Stack;
 
 public class World {
   private final World previous;

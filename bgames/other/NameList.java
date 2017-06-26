@@ -1,19 +1,19 @@
-package bgames.value;
+package bgames.other;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Location implements Value, Iterable<String> {
+public class NameList implements Iterable<String> {
   private final String[] names;
   
-  public Location(String[] names) {
+  public NameList(String[] names) {
     this.names = names;
   }
-  public class LocationIterator implements Iterator<String> {
+  public class NameIterator implements Iterator<String> {
     private int position;
-    private final Location source;
+    private final NameList source;
     
-    public LocationIterator(Location source) {
+    public NameIterator(NameList source) {
       this.position = 0;
       this.source = source;
     }
@@ -24,13 +24,13 @@ public class Location implements Value, Iterable<String> {
     @Override
     public String next() {
       if (!hasNext()) {
-        throw new NoSuchElementException("End of location.");
+        throw new NoSuchElementException("End of pointer.");
       }
       position += 1;
       return source.names[position - 1];
     }
   }
-  public LocationIterator iterator() {
-    return new LocationIterator(this);
+  public NameIterator iterator() {
+    return new NameIterator(this);
   }
 }
