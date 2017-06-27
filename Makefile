@@ -7,7 +7,7 @@ trie:
 other:	
 	javac bgames/other/*.java
 
-stack: expressions	
+stack: expressions controls mutators
 	javac bgames/stack/*.java
 
 expressions: unary binary
@@ -18,6 +18,12 @@ unary:
 
 binary:
 	javac bgames/stack/expressions/binary/*.java
+
+controls:
+	javac bgames/stack/controls/*.java
+
+mutators:
+	javac bgames/stack/mutators/*.java
 
 field:
 	javac bgames/field/*.java
@@ -33,7 +39,10 @@ clean:
 	rm bgames/other/*.class
 	rm bgames/stack/*.class
 	rm bgames/stack/expressions/*.class
+	rm bgames/stack/expressions/unary/*.class
 	rm bgames/stack/expressions/binary/*.class
+	rm bgames/stack/controls/*.class
+	rm bgames/stack/mutators/*.class
 	rm bgames/field/*.class
 	rm bgames/value/*.class
 	rm bgames/thing/*.class

@@ -1,62 +1,46 @@
 package bgames.value;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import bgames.trie.Trie;
+import bgames.trie.FindOrCreate;
+import bgames.trie.Assign;
 
-public class ValueList implements Value, Iterable<Value> {
-  private final Value[] values;
+public class ValueList implements Value{
+  private final Trie<Value> trie;
+  private final int start, end;
   
+  private ValueList(Trie<Value> trie, int start, int end) {
+    this.trie = trie;
+    this.start = start;
+    this.end = end;
+  }
   public ValueList(Value[] values) {
-    this.values = values;
+    Trie<Value> tempTrie = new Trie<>();
+    for (int i = 0; i < values.length; i++) {
+      FindOrCreate<Value> procedure = new FindOrCreate<Value>(String.valueOf(i),
+                                      new Assign<Value>(values[i]));
+      tempTrie = procedure.apply(tempTrie);
+    }
+    trie = tempTrie;
+    start = 0;
+    end = values.length;
   }
   
   public int getLength() {
-    return values.length;
+    return end - start;
+  }
+  public boolean inRange(int i) {
+    return (i >= 0) && (i < getLength());
   }
   public Value get(int i) {
-    try {
-      return values[i];
-    }
-    catch (IndexOutOfBoundsException exc) {
-      return null;
-    }
-  }
-  public ValueList set(int i, Value value) {
-    try {
-      Value[] newValues = Arrays.copyOf(values, values.length);
-      newValues[i] = value;
-      return new ValueList(newValues);
-    }
-    catch (IndexOutOfBoundsException exc) {
-      return this;
-    }
+    return trie.get(String.valueOf(start + i));
   }
   
-  public class ValueIterator implements Iterator<Value> {
-    private int position;
-    private final ValueList source;
-    
-    public ValueIterator(ValueList source) {
-      this.position = 0;
-      this.source = source;
+  public ValueList set(int i, Value value) {
+    if (inRange(i)) {
+      FindOrCreate<Value> procedure = new FindOrCreate<Value>(String.valueOf(start + i),
+                                      new Assign<Value>(value));
+      return new ValueList(procedure.apply(trie), start, end);
     }
-    
-    @Override
-    public boolean hasNext() {
-      return position < source.values.length;
-    }
-    @Override
-    public Value next() {
-      if (!hasNext()) {
-        throw new NoSuchElementException("End of value list.");
-      }
-      position += 1;
-      return source.values[position - 1];
-    }
-  }
-  @Override
-  public ValueIterator iterator() {
-    return new ValueIterator(this);
+    return this;
   }
 }

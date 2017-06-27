@@ -12,20 +12,14 @@ public class Constant implements Expression {
     this.value = value;
   }
   
-  public static class State extends StackState {
-    private final Constant source;
-    
-    public State(Constant source) {
-      this.source = source;
-    }
-    
+  private class State extends StackState {
     @Override
     public Stack next(Stack owner, OutsideWorld outside) {
-      return owner.pop(source.value, outside);
+      return owner.pop(value, outside);
     }
   }
   @Override
-  public StackState getState() {
-    return new State(this);
+  public State getState() {
+    return new State();
   }
 }

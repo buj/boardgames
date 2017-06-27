@@ -1,6 +1,7 @@
 package bgames.stack;
 
 import bgames.trie.Trie;
+import bgames.trie.Find;
 import bgames.trie.FindOrCreate;
 import bgames.thing.Thing;
 import bgames.World;
@@ -12,7 +13,7 @@ public class Stack {
   private final StackState state;
   private final String destination;
   
-  public Stack(Stack below, Trie<MemoryCell> memory, StackState state, String destination) {
+  private Stack(Stack below, Trie<MemoryCell> memory, StackState state, String destination) {
     this.below = below;
     this.memory = memory;
     this.state = state;
@@ -20,6 +21,9 @@ public class Stack {
   }
   public Stack(StackState state, String destination) {
     this(null, new Trie<>(), state, destination);
+  }
+  public Stack(StackState state) {
+    this(state, null);
   }
   
   public Value getValue(String name, OutsideWorld outside) {
@@ -43,19 +47,43 @@ public class Stack {
   }
   
   public Stack setBelow(Stack below) {
+    if (below == this.below) {
+      return this;
+    }
     return new Stack(below, this.memory, this.state, this.destination);
   }
   public Stack setMemory(Trie<MemoryCell> memory) {
+    if (memory == this.memory) {
+      return this;
+    }
     return new Stack(this.below, memory, this.state, this.destination);
   }
   public Stack setState(StackState state) {
+    if (state == this.state) {
+      return this;
+    }
     return new Stack(this.below, this.memory, state, this.destination);
   }
   
+  private Stack setExistingNameValue(String name, Value value, OutsideWorld outside) {
+    Find<MemoryCell> procedure = new Find<MemoryCell>(name,
+                                 new MemoryCell.SetValue(value, outside));
+    Stack result = setMemory(procedure.apply(memory));
+    if (result == this) {
+      if (below != null) {
+        return setBelow(below.setExistingNameValue(name, value, outside));
+      }
+    }
+    return result;
+  }
   public Stack setNameValue(String name, Value value, OutsideWorld outside) {
-    FindOrCreate<MemoryCell> procedure = new FindOrCreate<MemoryCell>(name,
-                                         new MemoryCell.SetValue(value, outside));
-    return setMemory(procedure.apply(memory));
+    Stack result = setExistingNameValue(name, value, outside);
+    if (result == this) {
+      FindOrCreate<MemoryCell> procedure = new FindOrCreate<MemoryCell>(name,
+                                           new MemoryCell.SetValue(value, outside));
+      return setMemory(procedure.apply(memory));
+    }
+    return result;
   }
   
   public Stack push(Stack top) {

@@ -11,20 +11,14 @@ public class NamedValue implements Expression {
     this.name = name;
   }
   
-  public static class State extends StackState {
-    private final NamedValue source;
-    
-    public State(NamedValue source) {
-      this.source = source;
-    }
-    
+  private class State extends StackState {    
     @Override
     public Stack next(Stack owner, OutsideWorld outside) {
-      return owner.pop(owner.getValue(source.name, outside), outside);
+      return owner.pop(owner.getValue(name, outside), outside);
     }
   }
   @Override
-  public StackState getState() {
-    return new State(this);
+  public State getState() {
+    return new State();
   }
 }

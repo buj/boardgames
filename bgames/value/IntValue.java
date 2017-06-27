@@ -31,4 +31,7 @@ public class IntValue implements Value {
     }
     return this;
   }
+  public IntValue reflected() {
+    return new IntValue(-value);
+  }
 }

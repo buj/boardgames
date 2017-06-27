@@ -47,6 +47,6 @@ public class ThingTrie {
                             new Thing.GetFields(
                             new Find<Field>(pointer.getFieldId(),
                             new ValueFieldAssign(newValue))));
-    return this.newRoot(procedure.apply(root));
+    return newRoot(procedure.apply(root));
   }
 }
