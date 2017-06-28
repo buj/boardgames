@@ -22,4 +22,9 @@ public class Smaller implements BinaryOperator<Value> {
     }
     return null;
   }
+  
+  @Override
+  public String toString() {
+    return "<";
+  }
 }

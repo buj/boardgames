@@ -38,6 +38,18 @@ public class FunctionCall implements Expression {
     }
     
     @Override
+    public String toString() {
+      String result = FunctionCall.this.toString();
+      if (!step) {
+        result += "\n(try to call this function)";
+      }
+      if (step) {
+        result += "\n(done)";
+      }
+      return result;
+    }
+    
+    @Override
     public boolean isReturnPoint() {
       return true;
     }
@@ -59,5 +71,10 @@ public class FunctionCall implements Expression {
       return null;
     }
     return new FunctionCall(name, list);
+  }
+  
+  @Override
+  public String toString() {
+    return name + list.toString();
   }
 }

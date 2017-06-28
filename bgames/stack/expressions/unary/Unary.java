@@ -29,6 +29,18 @@ public class Unary implements Expression {
       }
       return owner.pop(function.apply(owner.getValue("0", outside)), outside);
     }
+    
+    @Override
+    public String toString() {
+      String result = Unary.this.toString();
+      if (step) {
+        result += "\n(done)";
+      }
+      else {
+        result += "\n(next step is to evaluate operand)";
+      }
+      return result;
+    }
   }
   @Override
   public State getState() {
@@ -51,5 +63,10 @@ public class Unary implements Expression {
       return null;
     }
     return new Unary(fun, exp);
+  }
+  
+  @Override
+  public String toString() {
+    return function.toString() + first.toString();
   }
 }

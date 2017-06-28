@@ -31,6 +31,21 @@ public class Binary implements Expression {
       }
       return owner.pop(function.apply(owner.getValue("0", outside), owner.getValue("1", outside)), outside);
     }
+    
+    @Override
+    public String toString() {
+      String result = Binary.this.toString();
+      if (step == 0) {
+        result += "\n(first operand will be evaluated next)";
+      }
+      if (step == 1) {
+        result += "\n(second operand will be evaluated next)";
+      }
+      if (step == 2) {
+        result += "\n(done)";
+      }
+      return result;
+    }
   }
   @Override
   public State getState() {
@@ -98,5 +113,18 @@ public class Binary implements Expression {
       return null;
     }
     return new Binary(fun, first, second);
+  }
+  
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("(");
+    builder.append(operands[0].toString());
+    builder.append(" ");
+    builder.append(function.toString());
+    builder.append(" ");
+    builder.append(operands[1].toString());
+    builder.append(")");
+    return builder.toString();
   }
 }

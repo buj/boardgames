@@ -17,6 +17,11 @@ public class NamedValue implements Expression {
     public Stack next(Stack owner, OutsideWorld outside) {
       return owner.pop(owner.getValue(name, outside), outside);
     }
+    
+    @Override
+    public String toString() {
+      return "get the value of: " + NamedValue.this.toString();
+    }
   }
   @Override
   public State getState() {
@@ -29,5 +34,10 @@ public class NamedValue implements Expression {
       return new NamedValue(res);
     }
     return null;
+  }
+  
+  @Override
+  public String toString() {
+    return name;
   }
 }

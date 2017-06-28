@@ -1,12 +1,15 @@
 package bgames.thing;
 
 import java.util.function.Function;
+import java.util.ArrayList;
 
 import bgames.trie.Trie;
 import bgames.trie.FindOrCreate;
 import bgames.trie.Assign;
 import bgames.field.Field;
+import bgames.field.ValueField;
 import bgames.other.ParseState;
+import bgames.stack.controls.Block;
 
 public class Thing {
   private final String id;
@@ -20,6 +23,10 @@ public class Thing {
   public String getId() {
     return id;
   }
+  public Thing setId(String id) {
+    return new Thing(id, this.fields);
+  }
+  
   public Trie<Field> getFields() {
     return fields;
   }
@@ -69,5 +76,21 @@ public class Thing {
       result = procedure.apply(result);
     }
     return new Thing(id, result);
+  }
+  
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("&");
+    builder.append(id);
+    builder.append(":\n");
+    ArrayList<String> list = fields.collect();
+    for (int i = 0; i < list.size(); i++) {
+      Field field = fields.get(list.get(i));
+      if (field instanceof ValueField) {
+        builder.append(Block.indent(field.toString()));
+      }
+    }
+    return builder.toString();
   }
 }

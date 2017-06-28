@@ -31,6 +31,18 @@ public class ExpressionList implements Expression {
       }
       return owner.pop(new ValueList(values), outside);
     }
+    
+    @Override
+    public String toString() {
+      String result = ExpressionList.this.toString();
+      if (step < list.length) {
+        result += String.format("\noperand %d is going to be evaluated next", step + 1);
+      }
+      else {
+        result += "\n(done)";
+      }
+      return result;
+    }
   }
   @Override
   public State getState() {
@@ -61,5 +73,19 @@ public class ExpressionList implements Expression {
       }
     }
     return new ExpressionList(list.toArray(new Expression[0]));
+  }
+  
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("(");
+    for (int i = 0; i < list.length; i++) {
+      builder.append(list[i].toString());
+      if (i != list.length - 1) {
+        builder.append(", ");
+      }
+    }
+    builder.append(")");
+    return builder.toString();
   }
 }

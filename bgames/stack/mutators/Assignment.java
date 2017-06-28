@@ -28,6 +28,18 @@ public class Assignment implements Mutator {
       Value value = owner.getValue("0", outside);
       return owner.pop().setNameValue(name, value, outside);
     }
+    
+    @Override
+    public String toString() {
+      String result = Assignment.this.toString();
+      if (step) {
+        result += "\n(done)";
+      }
+      else {
+        result += "\n(expression will be evaluated next)"
+      }
+      return result;
+    }
   }
   @Override
   public State getState() {
@@ -50,5 +62,10 @@ public class Assignment implements Mutator {
       return null;
     }
     return new Assignment(name, exp);
+  }
+  
+  @Override
+  public String toString() {
+    return name + " = " + expression.toString();
   }
 }

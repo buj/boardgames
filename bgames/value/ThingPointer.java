@@ -13,4 +13,9 @@ public class ThingPointer implements Value {
   public FieldPointer getField(String name) {
     return new FieldPointer(id, name);
   }
+  
+  @Override
+  public String toString() {
+    return "&" + id;
+  }
 }

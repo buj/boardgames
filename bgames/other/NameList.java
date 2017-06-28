@@ -47,4 +47,18 @@ public class NameList {
     }
     return new NameList(list.toArray(new String[0]));
   }
+  
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("(");
+    for (int i = 0; i < names.length; i++) {
+      builder.append(names[i]);
+      if (i != names.length - 1) {
+        builder.append(", ");
+      }
+    }
+    builder.append(")");
+    return builder.toString();
+  }
 }

@@ -10,6 +10,7 @@ import bgames.field.ValueField;
 import bgames.field.ValueFieldAssign;
 import bgames.value.Value;
 import bgames.value.ThingPointer;
+import bgames.stack.controls.Block;
 
 public class ThingTrie {
   private final Trie<Thing> root;
@@ -69,5 +70,10 @@ public class ThingTrie {
                             new Find<Field>(pointer.getFieldId(),
                             new ValueFieldAssign(newValue))));
     return setRoot(procedure.apply(root));
+  }
+  
+  @Override
+  public String toString() {
+    return "Things:\n" + Block.indent(root.toString());
   }
 }

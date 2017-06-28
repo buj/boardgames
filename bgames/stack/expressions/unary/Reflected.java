@@ -21,4 +21,9 @@ public class Reflected implements UnaryOperator<Value> {
     }
     return null;
   }
+  
+  @Override
+  public String toString() {
+    return "-";
+  }
 }

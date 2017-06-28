@@ -35,4 +35,9 @@ public class ValueField extends Field {
     }
     return new ValueField(id, val);
   }
+  
+  @Override
+  public String toString() {
+    return id + " = " + value.toString();
+  }
 }

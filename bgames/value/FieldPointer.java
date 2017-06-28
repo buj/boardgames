@@ -17,4 +17,9 @@ public class FieldPointer implements Value {
   public String getFieldId() {
     return fieldId;
   }
+  
+  @Override
+  public String toString() {
+    return "&" + thingId + "." + fieldId;
+  }
 }

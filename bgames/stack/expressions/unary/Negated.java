@@ -21,4 +21,9 @@ public class Negated implements UnaryOperator<Value> {
     }
     return null;
   }
+  
+  @Override
+  public String toString() {
+    return "!";
+  }
 }

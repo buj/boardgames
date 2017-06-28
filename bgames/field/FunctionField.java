@@ -39,4 +39,9 @@ public class FunctionField extends Field {
     }
     return new FunctionField(id, names, block);
   }
+  
+  @Override
+  public String toString() {
+    return id + " " + names.toString() + " " + block.toString();
+  }
 }

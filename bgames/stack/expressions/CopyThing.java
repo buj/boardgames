@@ -20,14 +20,20 @@ public class CopyThing implements Expression {
   private class State extends StackState {
     @Override
     public Stack next(Stack owner, OutsideWorld outside) {
-      String name = String.valueOf(outside.getThings().getMaxId());
+      String name = String.valueOf(outside.getThings().getMaxId() + 1);
       Thing preimage = outside.getThings().getThing(pointer);
+      Thing copy = preimage.setId(name);
       FindOrCreate<Thing> procedure = new FindOrCreate<Thing>(name,
-                                      new Assign<Thing>(preimage));
+                                      new Assign<Thing>(copy));
       Trie<Thing> root = outside.getThings().getRoot();
       root = procedure.apply(root);
       outside.setThings(outside.getThings().setRoot(root));
       return owner.pop(new ThingPointer(name), outside);
+    }
+    
+    @Override
+    public String toString() {
+      return CopyThing.this.toString();
     }
   }
   @Override
@@ -46,5 +52,10 @@ public class CopyThing implements Expression {
       return null;
     }
     return new CopyThing(new ThingPointer(name));
+  }
+  
+  @Override
+  public String toString() {
+    return "new " + pointer.toString();
   }
 }
