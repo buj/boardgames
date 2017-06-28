@@ -1,14 +1,14 @@
 package bgames.stack.controls;
 
-import bgames.stack.Executable;
 import bgames.stack.Stack;
 import bgames.stack.StackState;
 import bgames.stack.OutsideWorld;
 import bgames.stack.expressions.Expression;
 import bgames.value.Value;
 import bgames.value.BoolValue;
+import bgames.other.ParseState;
 
-public class If implements Executable {
+public class If implements Controller {
   private final Expression condition;
   private final Block block;
   
@@ -40,5 +40,31 @@ public class If implements Executable {
   @Override
   public State getState() {
     return new State();
+  }
+  
+  public static If parse(ParseState text) {
+    int backup = text.getPosition();
+    if (!text.read("if")) {
+      return null;
+    }
+    if (!text.read("(")) {
+      text.setPosition(backup);
+      return null;
+    }
+    Expression exp = Expression.parse(text);
+    if (exp == null) {
+      text.setPosition(backup);
+      return null;
+    }
+    if (!text.read(")")) {
+      text.setPosition(backup);
+      return null;
+    }
+    Block block = Block.parse(text);
+    if (block == null) {
+      text.setPosition(backup);
+      return null;
+    }
+    return new If(exp, block);
   }
 }

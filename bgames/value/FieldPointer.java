@@ -1,6 +1,6 @@
-package bgames.other;
+package bgames.value;
 
-public class FieldPointer {
+public class FieldPointer implements Value {
   private final String thingId, fieldId;
   
   public FieldPointer(String thingId, String fieldId) {

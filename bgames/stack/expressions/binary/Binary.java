@@ -6,6 +6,7 @@ import bgames.stack.expressions.Expression;
 import bgames.stack.Stack;
 import bgames.stack.StackState;
 import bgames.stack.OutsideWorld;
+import bgames.other.ParseState;
 import bgames.value.Value;
 
 public class Binary implements Expression {
@@ -34,5 +35,68 @@ public class Binary implements Expression {
   @Override
   public State getState() {
     return new State();
+  }
+  
+  public static Binary parse(ParseState text) {
+    int backup = text.getPosition();
+    if (!text.read("(")) {
+      return null;
+    }
+    Expression first = Expression.parse(text);
+    if (first == null) {
+      text.setPosition(backup);
+      return null;
+    }
+    BinaryOperator<Value> fun = GreaterEqual.parse(text);
+    if (fun == null) {
+      fun = Greater.parse(text);
+    }
+    if (fun == null) {
+      fun = SmallerEqual.parse(text);
+    }
+    if (fun == null) {
+      fun = Smaller.parse(text);
+    }
+    if (fun == null) {
+      fun = Equals.parse(text);
+    }
+    if (fun == null) {
+      fun = And.parse(text);
+    }
+    if (fun == null) {
+      fun = Or.parse(text);
+    }
+    if (fun == null) {
+      fun = Xor.parse(text);
+    }
+    if (fun == null) {
+      fun = Plus.parse(text);
+    }
+    if (fun == null) {
+      fun = Minus.parse(text);
+    }
+    if (fun == null) {
+      fun = Times.parse(text);
+    }
+    if (fun == null) {
+      fun = DividedBy.parse(text);
+    }
+    if (fun == null) {
+      fun = Modulo.parse(text);
+    }
+    if (fun == null) {
+      text.setPosition(backup);
+      return null;
+    }
+    Expression second = Expression.parse(text);
+    if (second == null) {
+      text.setPosition(backup);
+      return null;
+    }
+    if (!text.read(")")) {
+      text.setPosition(backup);
+      return null;
+    }
+    return new Binary(fun, first, second);
   }
 }

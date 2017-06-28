@@ -1,5 +1,7 @@
 package bgames.value;
 
+import bgames.other.ParseState;
+
 public class IntValue implements Value {
   private int value;
   
@@ -33,5 +35,13 @@ public class IntValue implements Value {
   }
   public IntValue reflected() {
     return new IntValue(-value);
+  }
+  
+  public static IntValue parse(ParseState text) {
+    int res = text.readUint();
+    if (res != -1) {
+      return new IntValue(res);
+    }
+    return null;
   }
 }

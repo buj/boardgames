@@ -4,16 +4,17 @@ import bgames.stack.Stack;
 import bgames.stack.StackState;
 import bgames.stack.OutsideWorld;
 import bgames.stack.controls.WithBlock;
-import bgames.other.FieldPointer;
+import bgames.value.FieldPointer;
 import bgames.field.Field;
 import bgames.field.FunctionField;
+import bgames.other.ParseState;
 
 public class FunctionCall implements Expression {
-  private final FieldPointer pointer;
+  private final String name;
   private final ExpressionList list;
   
-  public FunctionCall(FieldPointer pointer, ExpressionList list) {
-    this.pointer = pointer;
+  public FunctionCall(String name, ExpressionList list) {
+    this.name = name;
     this.list = list;
   }
   
@@ -24,6 +25,7 @@ public class FunctionCall implements Expression {
     public Stack next(Stack owner, OutsideWorld outside) {
       if (!step) {
         step = true;
+        FieldPointer pointer = owner.getPointer(name);
         Field field = outside.getThings().getField(pointer);
         if (!(field instanceof FunctionField)) {
           return owner.pop();
@@ -43,5 +45,19 @@ public class FunctionCall implements Expression {
   @Override
   public State getState() {
     return new State();
+  }
+  
+  public static FunctionCall parse(ParseState text) {
+    int backup = text.getPosition();
+    String name = text.readName();
+    if (name == null) {
+      return null;
+    }
+    ExpressionList list = ExpressionList.parse(text);
+    if (list == null) {
+      text.setPosition(backup);
+      return null;
+    }
+    return new FunctionCall(name, list);
   }
 }

@@ -1,5 +1,7 @@
 package bgames.value;
 
+import bgames.other.ParseState;
+
 public class BoolValue implements Value {
   private boolean value;
   
@@ -24,5 +26,15 @@ public class BoolValue implements Value {
   }
   public BoolValue negated() {
     return new BoolValue(!value);
+  }
+  
+  public static BoolValue parse(ParseState text) {
+    if (text.read("true")) {
+      return new BoolValue(true);
+    }
+    if (text.read("false")) {
+      return new BoolValue(false);
+    }
+    return null;
   }
 }

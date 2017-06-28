@@ -6,7 +6,11 @@ public class ThingPointer implements Value {
   public ThingPointer(String id) {
     this.id = id;
   }
+  
   public String getId() {
     return id;
+  }
+  public FieldPointer getField(String name) {
+    return new FieldPointer(id, name);
   }
 }

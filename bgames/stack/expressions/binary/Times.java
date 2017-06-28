@@ -4,6 +4,7 @@ import java.util.function.BinaryOperator;
 
 import bgames.value.Value;
 import bgames.value.IntValue;
+import bgames.other.ParseState;
 
 public class Times implements BinaryOperator<Value> {
   @Override
@@ -16,5 +17,12 @@ public class Times implements BinaryOperator<Value> {
       result = result.times((IntValue)second);
     }
     return result;
+  }
+  
+  public static Times parse(ParseState text) {
+    if (text.read("*")) {
+      return new Times();
+    }
+    return null;
   }
 }

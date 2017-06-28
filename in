@@ -1,0 +1,31 @@
+ahoj {
+  hodnota = 5
+  slabota = 8
+  blby = true
+  
+  blabla (x, y, z) {
+    x = (((2 * x) + y) + z)
+    ahoj = (4 - 3)
+    cecil = (true && true)
+    with (gogo, haha) = (4, 4) {
+      {
+        haha= (5*3)
+      }
+    }
+    linka = new ahoj
+    return blabla(((x - 1), 5, 6), (y - 1), (z - 1))
+  }
+  factorial (x) {
+    if ((x == 0)) {
+      return 1
+    }
+    return (x * factorial((x - 1)))
+  }
+}
+
+main () {
+  x = new ahoj
+  x {
+    hodnota = factorial(5)
+  }
+}

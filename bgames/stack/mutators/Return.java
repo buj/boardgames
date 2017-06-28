@@ -3,10 +3,10 @@ package bgames.stack.mutators;
 import bgames.stack.Stack;
 import bgames.stack.StackState;
 import bgames.stack.OutsideWorld;
-import bgames.stack.Executable;
 import bgames.stack.expressions.Expression;
+import bgames.other.ParseState;
 
-public class Return implements Executable {
+public class Return implements Mutator {
   private final Expression expression;
   
   public Return(Expression expression) {
@@ -32,5 +32,18 @@ public class Return implements Executable {
   @Override
   public State getState() {
     return new State();
+  }
+  
+  public static Return parse(ParseState text) {
+    int backup = text.getPosition();
+    if (!text.read("return")) {
+      return null;
+    }
+    Expression exp = Expression.parse(text);
+    if (exp == null) {
+      text.setPosition(backup);
+      return null;
+    }
+    return new Return(exp);
   }
 }

@@ -4,6 +4,7 @@ import java.util.function.BinaryOperator;
 
 import bgames.value.Value;
 import bgames.value.IntValue;
+import bgames.other.ParseState;
 
 public class Minus implements BinaryOperator<Value> {
   @Override
@@ -16,5 +17,12 @@ public class Minus implements BinaryOperator<Value> {
       result = result.minus((IntValue)second);
     }
     return result;
+  }
+  
+  public static Minus parse(ParseState text) {
+    if (text.read("-")) {
+      return new Minus();
+    }
+    return null;
   }
 }

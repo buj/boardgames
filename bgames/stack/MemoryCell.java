@@ -3,37 +3,41 @@ package bgames.stack;
 import java.util.function.Function;
 
 import bgames.value.Value;
-import bgames.other.FieldPointer;
+import bgames.value.FieldPointer;
+import bgames.field.Field;
 
 public class MemoryCell {
-  private final FieldPointer pointer;
   private final Value value;
   
   public MemoryCell(Value value) {
-    this.pointer = null;
     this.value = value;
-  }
-  public MemoryCell(FieldPointer pointer) {
-    this.pointer = pointer;
-    this.value = null;
   }
   
   public boolean isPointer() {
-    return pointer != null;
-  }
-  public boolean isValue() {
-    return value != null;
+    return (value instanceof FieldPointer);
   }
   
+  public FieldPointer getPointer() {
+    if (isPointer()) {
+      return (FieldPointer)value;
+    }
+    return null;
+  }
+  public Field getField(OutsideWorld outside) {
+    if (isPointer()) {
+      return outside.getThings().getField((FieldPointer)value);
+    }
+    return null;
+  }
   public Value getValue(OutsideWorld outside) {
     if (isPointer()) {
-      return outside.getThings().getValue(pointer);
+      return outside.getThings().getValue((FieldPointer)value);
     }
     return value;
   }
   public MemoryCell setValue(Value value, OutsideWorld outside) {
     if (isPointer()) {
-      outside.setThings(outside.getThings().setValue(value, pointer));
+      outside.setThings(outside.getThings().setValue(value, (FieldPointer)this.value));
       return this;
     }
     return new MemoryCell(value);
@@ -50,7 +54,10 @@ public class MemoryCell {
     
     @Override
     public MemoryCell apply(MemoryCell cell) {
-      return cell.setValue(value, outside);
+      if (cell != null) {
+        return cell.setValue(value, outside);
+      }
+      return new MemoryCell(value);
     }
   }
 }

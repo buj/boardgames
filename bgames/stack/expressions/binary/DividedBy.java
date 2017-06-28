@@ -4,6 +4,7 @@ import java.util.function.BinaryOperator;
 
 import bgames.value.Value;
 import bgames.value.IntValue;
+import bgames.other.ParseState;
 
 public class DividedBy implements BinaryOperator<Value> {
   @Override
@@ -16,5 +17,12 @@ public class DividedBy implements BinaryOperator<Value> {
       result = result.dividedBy((IntValue)second);
     }
     return result;
+  }
+  
+  public static DividedBy parse(ParseState text) {
+    if (text.read("/")) {
+      return new DividedBy();
+    }
+    return null;
   }
 }

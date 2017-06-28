@@ -7,6 +7,7 @@ import bgames.stack.Stack;
 import bgames.stack.StackState;
 import bgames.stack.OutsideWorld;
 import bgames.value.Value;
+import bgames.other.ParseState;
 
 public class Unary implements Expression {
   private final UnaryOperator<Value> function;
@@ -32,5 +33,23 @@ public class Unary implements Expression {
   @Override
   public State getState() {
     return new State();
+  }
+  
+  public static Unary parse(ParseState text) {
+    int backup = text.getPosition();
+    UnaryOperator<Value> fun = Negated.parse(text);
+    if (fun == null) {
+      fun = Reflected.parse(text);
+    }
+    if (fun == null) {
+      text.setPosition(backup);
+      return null;
+    }
+    Expression exp = Expression.parse(text);
+    if (exp == null) {
+      text.setPosition(backup);
+      return null;
+    }
+    return new Unary(fun, exp);
   }
 }

@@ -4,6 +4,7 @@ import java.util.function.BinaryOperator;
 
 import bgames.value.Value;
 import bgames.value.BoolValue;
+import bgames.other.ParseState;
 
 public class Xor implements BinaryOperator<Value> {
   @Override
@@ -16,5 +17,12 @@ public class Xor implements BinaryOperator<Value> {
       result = result.xor((BoolValue)second);
     }
     return result;
+  }
+  
+  public static Xor parse(ParseState text) {
+    if (text.read("^^")) {
+      return new Xor();
+    }
+    return null;
   }
 }

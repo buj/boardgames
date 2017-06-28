@@ -4,6 +4,7 @@ import java.util.function.BinaryOperator;
 
 import bgames.value.Value;
 import bgames.value.BoolValue;
+import bgames.other.ParseState;
 
 public class Or implements BinaryOperator<Value> {
   @Override
@@ -16,5 +17,12 @@ public class Or implements BinaryOperator<Value> {
       result = result.or((BoolValue)second);
     }
     return result;
+  }
+  
+  public static Or parse(ParseState text) {
+    if (text.read("||")) {
+      return new Or();
+    }
+    return null;
   }
 }

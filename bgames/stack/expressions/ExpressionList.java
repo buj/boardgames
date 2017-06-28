@@ -1,10 +1,13 @@
 package bgames.stack.expressions;
 
+import java.util.ArrayList;
+
 import bgames.stack.Stack;
 import bgames.stack.StackState;
 import bgames.stack.OutsideWorld;
 import bgames.value.Value;
 import bgames.value.ValueList;
+import bgames.other.ParseState;
 
 public class ExpressionList implements Expression {
   private final Expression[] list;
@@ -32,5 +35,31 @@ public class ExpressionList implements Expression {
   @Override
   public State getState() {
     return new State();
+  }
+  
+  public static ExpressionList parse(ParseState text) {
+    int backup = text.getPosition();
+    if (!text.read("(")) {
+      return null;
+    }
+    ArrayList<Expression> list = new ArrayList<>();
+    if (!text.read(")")) {
+      while (true) {
+        Expression exp = Expression.parse(text);
+        if (exp == null) {
+          text.setPosition(backup);
+          return null;
+        }
+        list.add(exp);
+        if (text.read(")")) {
+          break;
+        }
+        if (!text.read(",")) {
+          text.setPosition(backup);
+          return null;
+        }
+      }
+    }
+    return new ExpressionList(list.toArray(new Expression[0]));
   }
 }

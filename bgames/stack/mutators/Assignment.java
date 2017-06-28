@@ -3,11 +3,11 @@ package bgames.stack.mutators;
 import bgames.stack.Stack;
 import bgames.stack.StackState;
 import bgames.stack.OutsideWorld;
-import bgames.stack.Executable;
 import bgames.stack.expressions.Expression;
 import bgames.value.Value;
+import bgames.other.ParseState;
 
-public class Assignment implements Executable {
+public class Assignment implements Mutator {
   private final String name;
   private final Expression expression;
   
@@ -32,5 +32,23 @@ public class Assignment implements Executable {
   @Override
   public State getState() {
     return new State();
+  }
+  
+  public static Assignment parse(ParseState text) {
+    int backup = text.getPosition();
+    String name = text.readName();
+    if (name == null) {
+      return null;
+    }
+    if (!text.read("=")) {
+      text.setPosition(backup);
+      return null;
+    }
+    Expression exp = Expression.parse(text);
+    if (exp == null) {
+      text.setPosition(backup);
+      return null;
+    }
+    return new Assignment(name, exp);
   }
 }

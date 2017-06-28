@@ -1,5 +1,7 @@
 package bgames.other;
 
+import java.util.ArrayList;
+
 public class NameList {
   private final String[] names;
   
@@ -18,5 +20,31 @@ public class NameList {
       return names[i];
     }
     return null;
+  }
+  
+  public static NameList parse(ParseState text) {
+    int backup = text.getPosition();
+    if (!text.read("(")) {
+      return null;
+    }
+    ArrayList<String> list = new ArrayList<>();
+    if (!text.read(")")) {
+      while (true) {
+        String name = text.readName();
+        if (name == null) {
+          text.setPosition(backup);
+          return null;
+        }
+        list.add(name);
+        if (text.read(")")) {
+          break;
+        }
+        if (!text.read(",")) {
+          text.setPosition(backup);
+          return null;
+        }
+      }
+    }
+    return new NameList(list.toArray(new String[0]));
   }
 }

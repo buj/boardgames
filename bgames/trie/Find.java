@@ -27,6 +27,9 @@ public class Find<T> implements Function<Trie<T>, Trie<T>> {
   }
   @Override
   public Trie<T> apply(Trie<T> trie) {
-    return apply(trie, Trie.strToStack(name));
+    if (name != null) {
+      return apply(trie, Trie.strToStack(name));
+    }
+    return trie;
   }
 }

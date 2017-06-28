@@ -4,6 +4,7 @@ import java.util.function.BinaryOperator;
 
 import bgames.value.Value;
 import bgames.value.BoolValue;
+import bgames.other.ParseState;
 
 public class And implements BinaryOperator<Value> {
   @Override
@@ -16,5 +17,12 @@ public class And implements BinaryOperator<Value> {
       result = result.and((BoolValue)second);
     }
     return result;
+  }
+  
+  public static And parse(ParseState text) {
+    if (text.read("&&")) {
+      return new And();
+    }
+    return null;
   }
 }

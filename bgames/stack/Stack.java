@@ -6,6 +6,8 @@ import bgames.trie.FindOrCreate;
 import bgames.thing.Thing;
 import bgames.World;
 import bgames.value.Value;
+import bgames.value.FieldPointer;
+import bgames.field.Field;
 
 public class Stack {
   private final Stack below;
@@ -26,6 +28,18 @@ public class Stack {
     this(state, null);
   }
   
+  public Field getField(String name, OutsideWorld outside) {
+    Field result = null;
+    try {
+      result = memory.get(name).getField(outside);
+    }
+    catch (NullPointerException exc) {
+      if (below != null) {
+        result = below.getField(name, outside);
+      }
+    }
+    return result;
+  }
   public Value getValue(String name, OutsideWorld outside) {
     Value result = null;
     try {
@@ -34,6 +48,18 @@ public class Stack {
     catch (NullPointerException exc) {
       if (below != null) {
         result = below.getValue(name, outside);
+      }
+    }
+    return result;
+  }
+  public FieldPointer getPointer(String name) {
+    FieldPointer result = null;
+    try {
+      result = memory.get(name).getPointer();
+    }
+    catch (NullPointerException exc) {
+      if (below != null) {
+        result = below.getPointer(name);
       }
     }
     return result;

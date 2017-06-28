@@ -3,6 +3,8 @@ package bgames.trie;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Trie<T> {
   private final T value;
@@ -63,5 +65,24 @@ public class Trie<T> {
   }
   public T get(String name) {
     return get(strToStack(name));
+  }
+  
+  private void collect(StringBuilder location, ArrayList<String> result) {
+    if (value != null) {
+      result.add(location.toString());
+    }
+    Iterator<Character> subs = keyIterator();
+    while (subs.hasNext()) {
+      Character ch = subs.next();
+      location.append(ch);
+      next(ch).collect(location, result);
+      location.deleteCharAt(location.length() - 1);
+    }
+  }
+  public ArrayList<String> collect() {
+    ArrayList<String> result = new ArrayList<>();
+    StringBuilder builder = new StringBuilder();
+    collect(builder, result);
+    return result;
   }
 }

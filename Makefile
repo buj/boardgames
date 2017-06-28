@@ -1,4 +1,6 @@
-all: trie other stack field value thing
+all: trie other stack field value thing main
+
+main:
 	javac bgames/*.java
 
 trie:
