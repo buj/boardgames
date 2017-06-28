@@ -18,6 +18,10 @@ public class Trie<T> {
     this(null, new HashMap<>());
   }
   
+  public boolean isEmpty() {
+    return table.isEmpty();
+  }
+  
   public T getValue() {
     return value;
   }
@@ -84,5 +88,17 @@ public class Trie<T> {
     StringBuilder builder = new StringBuilder();
     collect(builder, result);
     return result;
+  }
+  
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    ArrayList<String> list = collect();
+    for (int i = 0; i < list.size(); i++) {
+      T value = get(list.get(i));
+      builder.append(value.toString());
+      builder.append("\n");
+    }
+    return builder.toString();
   }
 }

@@ -32,4 +32,9 @@ public class Equals implements BinaryOperator<Value> {
     }
     return null;
   }
+  
+  @Override
+  public String toString() {
+    return "==";
+  }
 }

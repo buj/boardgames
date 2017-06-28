@@ -1,0 +1,22 @@
+power (base, exp) {
+  if (exp == 0) {
+    return 1
+  }
+  res = power(base, (exp /2))
+  res =(res*   res)
+  if ((exp % 2) == 1) {
+    res= (base*res)
+  }
+  return res
+}
+
+ahoj {
+  hodnota = 0
+}
+
+main () {
+  x = new ahoj
+  x {
+    hodnota = power(2, 5)
+  }
+}

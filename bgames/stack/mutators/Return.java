@@ -28,6 +28,11 @@ public class Return implements Mutator {
       }
       return newTop.pop(owner.getValue("0", outside), outside);
     }
+    
+    @Override
+    public String toString() {
+      return Return.this.toString();
+    }
   }
   @Override
   public State getState() {
@@ -45,5 +50,10 @@ public class Return implements Mutator {
       return null;
     }
     return new Return(exp);
+  }
+  
+  @Override
+  public String toString() {
+    return "return " + expression.toString();
   }
 }

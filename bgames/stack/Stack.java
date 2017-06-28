@@ -8,6 +8,7 @@ import bgames.World;
 import bgames.value.Value;
 import bgames.value.FieldPointer;
 import bgames.field.Field;
+import bgames.stack.controls.Block;
 
 public class Stack {
   private final Stack below;
@@ -93,7 +94,7 @@ public class Stack {
   
   private Stack setExistingNameValue(String name, Value value, OutsideWorld outside) {
     Find<MemoryCell> procedure = new Find<MemoryCell>(name,
-                                 new MemoryCell.SetValue(value, outside));
+                                 new MemoryCell.SetValue(name, value, outside));
     Stack result = setMemory(procedure.apply(memory));
     if (result == this) {
       if (below != null) {
@@ -102,12 +103,15 @@ public class Stack {
     }
     return result;
   }
+  public Stack setLocalNameValue(String name, Value value, OutsideWorld outside) {
+    FindOrCreate<MemoryCell> procedure = new FindOrCreate<MemoryCell>(name,
+                                         new MemoryCell.SetValue(name, value, outside));
+    return setMemory(procedure.apply(memory));
+  }
   public Stack setNameValue(String name, Value value, OutsideWorld outside) {
     Stack result = setExistingNameValue(name, value, outside);
     if (result == this) {
-      FindOrCreate<MemoryCell> procedure = new FindOrCreate<MemoryCell>(name,
-                                           new MemoryCell.SetValue(value, outside));
-      return setMemory(procedure.apply(memory));
+      result = setLocalNameValue(name, value, outside);
     }
     return result;
   }
@@ -119,6 +123,25 @@ public class Stack {
     return below;
   }
   public Stack pop(Value returnValue, OutsideWorld outside) {
-    return below.setNameValue(destination, returnValue, outside);
+    return below.setLocalNameValue(destination, returnValue, outside);
+  }
+  
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    if (below != null) {
+      builder.append(below.toString());
+      builder.append("\n");
+    }
+    builder.append("frame:\n");
+    builder.append(Block.indent(state.toString()));
+    if (!memory.isEmpty()) {
+      builder.append("memory:\n");
+      builder.append(Block.indent(memory.toString()));
+    }
+    if (destination != null) {
+      builder.append(Block.indent("return location = " + destination));
+    }
+    return builder.toString();
   }
 }

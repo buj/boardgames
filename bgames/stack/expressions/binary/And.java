@@ -25,4 +25,9 @@ public class And implements BinaryOperator<Value> {
     }
     return null;
   }
+  
+  @Override
+  public String toString() {
+    return "&&";
+  }
 }

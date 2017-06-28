@@ -35,12 +35,27 @@ public class WithBlock implements Controller {
           Stack newTop = owner.push(new Stack(block.getState()));
           ValueList values = (ValueList)temp;
           for (int i = 0; i < names.getLength(); i++) {
-            newTop = newTop.setNameValue(names.get(i), values.get(i), outside);
+            newTop = newTop.setLocalNameValue(names.get(i), values.get(i), outside);
           }
           return newTop;
         }
       }
       return owner.pop();
+    }
+    
+    @Override
+    public String toString() {
+      String result = WithBlock.this.toString();
+      if (step == 0) {
+        result += "\n(values of names will be evaluated next)";
+      }
+      if (step == 1) {
+        result += "\n(block will be executed next)";
+      }
+      if (step == 2) {
+        result += "\n(done)";
+      }
+      return result;
     }
   }
   @Override
@@ -73,5 +88,17 @@ public class WithBlock implements Controller {
       return null;
     }
     return new WithBlock(names, exps, block);
+  }
+  
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("with ");
+    builder.append(names.toString());
+    builder.append(" = ");
+    builder.append(list.toString());
+    builder.append(" ");
+    builder.append(block.toString());
+    return builder.toString();
   }
 }

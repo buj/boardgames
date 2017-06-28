@@ -48,7 +48,7 @@ public class World {
   }
   
   public static Stack getBottom() {
-    Constant global = new Constant(new ThingPointer(""));
+    Constant global = new Constant(new ThingPointer("0"));
     Executable[] steps = new Executable[1];
     steps[0] = new FunctionCall("main", new ExpressionList(new Expression[0]));
     Block block = new Block(steps);
@@ -76,9 +76,20 @@ public class World {
         global = procedure.apply(global);
       }
     }
-    FindOrCreate<Thing> addGlobal = new FindOrCreate<Thing>("",
-                                    new Assign<Thing>(new Thing("", global)));
+    FindOrCreate<Thing> addGlobal = new FindOrCreate<Thing>("0",
+                                    new Assign<Thing>(new Thing("0", global)));
     things = addGlobal.apply(things);
     return new World(null, getBottom(), new ThingTrie(things));
+  }
+  
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append(things.toString());
+    builder.append("\nStack (grows downwards):\n");
+    if (stack != null) {
+      builder.append(Block.indent(stack.toString()));
+    }
+    return builder.toString();
   }
 }

@@ -36,6 +36,21 @@ public class If implements Controller {
       }
       return owner.pop();
     }
+    
+    @Override
+    public String toString() {
+      String result = If.this.toString();
+      if (step == 0) {
+        result += "\n(condition will be evaluated next)";
+      }
+      if (step == 1) {
+        result += "\n(if the condition is satisfied, execute the block)";
+      }
+      if (step == 2) {
+        result += "\n(done)";
+      }
+      return result;
+    }
   }
   @Override
   public State getState() {
@@ -47,16 +62,8 @@ public class If implements Controller {
     if (!text.read("if")) {
       return null;
     }
-    if (!text.read("(")) {
-      text.setPosition(backup);
-      return null;
-    }
     Expression exp = Expression.parse(text);
     if (exp == null) {
-      text.setPosition(backup);
-      return null;
-    }
-    if (!text.read(")")) {
       text.setPosition(backup);
       return null;
     }
@@ -66,5 +73,15 @@ public class If implements Controller {
       return null;
     }
     return new If(exp, block);
+  }
+  
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("if ");
+    builder.append(condition.toString());
+    builder.append(" ");
+    builder.append(block.toString());
+    return builder.toString();
   }
 }

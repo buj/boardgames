@@ -1,6 +1,7 @@
 package bgames.stack.controls;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import bgames.stack.Executable;
 import bgames.stack.Stack;
@@ -26,6 +27,18 @@ public class Block implements Controller {
       }
       return owner.pop();
     }
+    
+    @Override
+    public String toString() {
+      String result = Block.this.toString();
+      if (step < steps.length) {
+        result += String.format("\n(step %d will be executed next)", step);
+      }
+      else {
+        result += "\n(done)";
+      }
+      return result;
+    }
   }
   @Override
   public State getState() {
@@ -50,5 +63,27 @@ public class Block implements Controller {
       list.add(exec);
     }
     return new Block(list.toArray(new Executable[0]));
+  }
+  
+  public static String indent(String str) {
+    StringBuilder builder = new StringBuilder();
+    Scanner sc = new Scanner(str);
+    while (sc.hasNextLine()) {
+      builder.append("  ");
+      builder.append(sc.nextLine());
+      builder.append("\n");
+    }
+    return builder.toString();
+  }
+  
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("{\n");
+    for (int i = 0; i < steps.length; i++) {
+      builder.append(indent(steps[i].toString()));
+    }
+    builder.append("}");
+    return builder.toString();
   }
 }

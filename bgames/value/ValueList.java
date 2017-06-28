@@ -43,4 +43,24 @@ public class ValueList implements Value{
     }
     return this;
   }
+  
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("(");
+    for (int i = 0; i < getLength(); i++) {
+      Value value = get(i);
+      if (value == null) {
+        builder.append("null");
+      }
+      else {
+        builder.append(value.toString());
+      }
+      if (i != getLength() - 1) {
+        builder.append(", ");
+      }
+    }
+    builder.append(")");
+    return builder.toString();
+  }
 }

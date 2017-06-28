@@ -25,4 +25,9 @@ public class Modulo implements BinaryOperator<Value> {
     }
     return null;
   }
+  
+  @Override
+  public String toString() {
+    return "%";
+  }
 }

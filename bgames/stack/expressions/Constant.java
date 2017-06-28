@@ -18,6 +18,11 @@ public class Constant implements Expression {
     public Stack next(Stack owner, OutsideWorld outside) {
       return owner.pop(value, outside);
     }
+    
+    @Override
+    public String toString() {
+      return "constant " + Constant.this.toString();
+    }
   }
   @Override
   public State getState() {
@@ -30,5 +35,10 @@ public class Constant implements Expression {
       return null;
     }
     return new Constant(val);
+  }
+  
+  @Override
+  public String toString() {
+    return value.toString();
   }
 }

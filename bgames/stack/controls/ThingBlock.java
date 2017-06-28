@@ -44,12 +44,27 @@ public class ThingBlock implements Controller {
           Iterator<String> fielder = fields.iterator();
           while (fielder.hasNext()) {
             String field = fielder.next();
-            newTop = newTop.setNameValue(field, thinger.getField(field), outside);
+            newTop = newTop.setLocalNameValue(field, thinger.getField(field), outside);
           }
           return newTop;
         }
       }
       return owner.pop();
+    }
+    
+    @Override
+    public String toString() {
+      String result = ThingBlock.this.toString();
+      if (step == 0) {
+        result += "\n(thing pointer will be evaluated next)";
+      }
+      if (step == 1) {
+        result += "\n(block will be executed next)";
+      }
+      if (step == 2) {
+        result += "\n(done)";
+      }
+      return result;
     }
   }
   @Override
@@ -69,5 +84,14 @@ public class ThingBlock implements Controller {
       return null;
     }
     return new ThingBlock(exp, block);
+  }
+  
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append(expression.toString());
+    builder.append(" ");
+    builder.append(block.toString());
+    return builder.toString();
   }
 }

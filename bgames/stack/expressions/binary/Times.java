@@ -25,4 +25,9 @@ public class Times implements BinaryOperator<Value> {
     }
     return null;
   }
+  
+  @Override
+  public String toString() {
+    return "*";
+  }
 }
