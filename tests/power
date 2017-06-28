@@ -19,4 +19,10 @@ main () {
   x {
     hodnota = power(2, 5)
   }
+  x {
+    hodnota = power(3, 7)
+  }
+  x {
+    hodnota = power(4, 9)
+  }
 }

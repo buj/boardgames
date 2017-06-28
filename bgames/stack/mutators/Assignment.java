@@ -36,7 +36,7 @@ public class Assignment implements Mutator {
         result += "\n(done)";
       }
       else {
-        result += "\n(expression will be evaluated next)"
+        result += "\n(expression will be evaluated next)";
       }
       return result;
     }

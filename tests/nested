@@ -1,0 +1,25 @@
+ahoj {
+  a = 5
+}
+
+main () {
+  x = new ahoj
+  x {
+    a = new ahoj
+    a {
+      a = new ahoj
+      a {
+        a = new ahoj
+        a {
+          a = new ahoj
+          a {
+            a = new ahoj
+            a {
+              a = 45678
+            }
+          }
+        }
+      }
+    }
+  }
+}

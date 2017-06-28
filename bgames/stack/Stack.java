@@ -4,6 +4,7 @@ import bgames.trie.Trie;
 import bgames.trie.Find;
 import bgames.trie.FindOrCreate;
 import bgames.thing.Thing;
+import bgames.thing.ThingTrie;
 import bgames.World;
 import bgames.value.Value;
 import bgames.value.FieldPointer;
@@ -93,10 +94,11 @@ public class Stack {
   }
   
   private Stack setExistingNameValue(String name, Value value, OutsideWorld outside) {
+    ThingTrie original = outside.getThings();
     Find<MemoryCell> procedure = new Find<MemoryCell>(name,
                                  new MemoryCell.SetValue(name, value, outside));
     Stack result = setMemory(procedure.apply(memory));
-    if (result == this) {
+    if (result == this && outside.getThings() == original) {
       if (below != null) {
         return setBelow(below.setExistingNameValue(name, value, outside));
       }
