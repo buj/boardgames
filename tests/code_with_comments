@@ -1,0 +1,34 @@
+ahoj { # thing (= object) definition
+  x = 546 # the object's variable
+  x = -245 # bad -- doesn't accept negative numbers in here
+  
+  pozdrav (x) { # function definition, 1 argument "x"
+    y = -245 # good -- here, "-" is an unary operator, not part of the value
+    z = 13 # local variable
+    cauko = new ahoj # creates a copy of ahoj, and its id is stored in cauko
+    cauko { # do things inside cauko's scope
+      x = 13 * 54 # bad -- binary operations must be enclosed in brackets
+      x = (13 * 54) # good
+      x = ((45 && (x - ((x * x) + x))) % 12)
+      hej =    (true||false  )
+      hej   =  !hej
+      hej = !   hej
+      hej= (hej ^^ hej)
+      hej =(hej == hej)
+      if false {
+        pozdrav(hej)
+      }
+      if (false) {} # bad -- condition need not be in brackets
+      if (a && b) {} # good
+      if a && b {} # bad
+      # comments are not recognized, need to delete them to compile
+    }
+  }
+}
+
+main () { # is the entry point
+  x = new ahoj
+  x {
+    pozdrav(43)
+  }
+}

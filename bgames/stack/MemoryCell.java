@@ -70,6 +70,9 @@ public class MemoryCell {
   
   @Override
   public String toString() {
+    if (value == null) {
+      return id + " = null";
+    }
     return id + " = " + value.toString();
   }
 }

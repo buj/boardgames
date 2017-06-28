@@ -1,0 +1,29 @@
+ahoj {
+  x = 546
+  
+  pozdrav (x) {
+    y = -245
+    z = 13
+    cauko = new ahoj
+    cauko {
+      x = (13 * 54)
+      x = ((45 && (x - ((x * x) + x))) % 12)
+      hej =    (true||false  )
+      hej   =  !hej
+      hej = !   hej
+      hej= (hej ^^ hej)
+      hej =(hej == hej)
+      if false {
+        pozdrav(hej)
+      }
+      if (a && b) {}
+    }
+  }
+}
+
+main () {
+  x = new ahoj
+  x {
+    pozdrav(43)
+  }
+}
